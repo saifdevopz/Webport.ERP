@@ -1,0 +1,14 @@
+﻿using Webport.ERP.Common.Domain.Abstractions;
+
+namespace Webport.ERP.Common.Application.Messaging;
+
+public interface IDomainEventDispatcher<in TDomainEvent> : IDomainEventDispatcher
+    where TDomainEvent : IDomainEvent
+{
+    Task Handle(TDomainEvent domainEvent, CancellationToken cancellationToken);
+}
+
+public interface IDomainEventDispatcher
+{
+    Task Handle(IDomainEvent domainEvent, CancellationToken cancellationToken);
+}

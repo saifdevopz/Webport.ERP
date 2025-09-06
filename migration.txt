@@ -1,0 +1,34 @@
+
+-------------------------------------------------------------------------------------------------------
+
+
+IdentityDBContext Migration Commands
+
+Add-Migration -Name InitialCreate -Context IdentityDbContext -OutputDir Database/Migrations -Project Webport.ERP.Identity.Infrastructure -StartupProject Webport.ERP.Api
+
+Update-Database -Context IdentityDbContext -Project Webport.ERP.Api -StartupProject Webport.ERP.Api
+
+
+InventoryDBContext Migration Commands
+
+Add-Migration -Name InitialCreate -Context InventoryDBContext -OutputDir Database/Migrations -Project Webport.ERP.Inventory.Infrastructure -StartupProject Webport.ERP.Api
+
+Update-Database -Context InventoryDBContext -Project Webport.ERP.Api -StartupProject Webport.ERP.Api
+
+
+-------------------------------------------------------------------------------------------------------
+
+
+Project Reference
+
+API => Module.Infrastructure
+
+Module.Domain => Common.Domain
+Module.Infrastructure => Common.Infrastructure, Module.Application, Module.Presentation
+Module.Application => Common.Application, Module.Domain, IntegrationEvents
+Module.Presentation => Common.Presentation, Module.Application
+
+* Add Assembly Reference Class => Module.Application, Module.Presentation
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

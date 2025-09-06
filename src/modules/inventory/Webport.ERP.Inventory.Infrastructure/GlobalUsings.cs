@@ -1,0 +1,9 @@
+﻿global using Webport.ERP.Common.Application.Database;
+global using Webport.ERP.Common.Application.Messaging;
+global using Webport.ERP.Common.Domain.Abstractions;
+global using Webport.ERP.Common.Infrastructure.Clock;
+global using Webport.ERP.Common.Infrastructure.Database;
+global using Webport.ERP.Common.Infrastructure.Interceptors;
+global using Webport.ERP.Common.Infrastructure.Outbox;
+global using Webport.ERP.Common.Infrastructure.Serialization;
+global using Webport.ERP.Common.Presentation.Endpoints;

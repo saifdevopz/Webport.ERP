@@ -1,0 +1,1 @@
+﻿global using Webport.ERP.Common.Domain.Abstractions;

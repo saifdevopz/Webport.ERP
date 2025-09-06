@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\Webport.ERP.Common.Infrastructure\Webport.ERP.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\Webport.ERP.Identity.Application\Webport.ERP.Identity.Application.csproj" />
+    <ProjectReference Include="..\Webport.ERP.Identity.Presentation\Webport.ERP.Identity.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>
