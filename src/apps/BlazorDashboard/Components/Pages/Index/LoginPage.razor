@@ -1,0 +1,79 @@
+﻿@layout AuthLayout
+@page "/account/login"
+@using Webport.ERP.Common.Domain.DataTransferObjects.System
+@attribute [AllowAnonymous]
+
+<EditForm Model="@model" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+
+    <div style="border: 1px solid #ccc; padding: 30px; border-radius: 5px; max-width: 400px; margin: auto;">
+        <div style="margin-bottom: 20px;">
+            <h3>Login</h3>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="email">Email</label><br />
+            <InputText id="email" @bind-Value="model.Email" class="form-control" />
+            <ValidationMessage For="@(() => model.Email)" />
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label for="password">Password</label><br />
+            <InputText id="password" @bind-Value="model.Password" type="password" class="form-control" />
+            <ValidationMessage For="@(() => model.Password)" />
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-dark">Login</button>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <div style="color:red; margin-top: 15px;">
+                <strong>@ErrorMessage</strong>
+            </div>
+        }
+    </div>
+</EditForm>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationState { get; set; }
+    public string? ErrorMessage { get; set; }
+    internal LoginDto model { get; set; } = new();
+
+    protected async override Task OnInitializedAsync()
+    {
+        await CheckUserAuthentication();
+
+        #if DEBUG
+            model.Email = "customer1@gmail.com";
+            model.Password = "12345678";
+        #endif
+    }
+
+    private async Task CheckUserAuthentication()
+    {
+        var user = (await AuthenticationState!).User;
+
+        if (user?.Identity?.IsAuthenticated == true)
+        {
+            _NavigationManager.NavigateTo("/dashboard/home");
+        }
+    }
+
+    public async Task HandleLogin()
+    {
+        var response = await _ITokenService.AccessToken(model);
+
+        if (response.IsSuccess)
+        {
+            _NavigationManager.NavigateTo("/account/postlogin?Token=" + response.Data.Token, forceLoad: true);
+        }
+        else
+        {
+            ErrorMessage = response.Error!.Description;
+        }
+    }
+
+}

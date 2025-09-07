@@ -1,0 +1,70 @@
+﻿@page "/dashboard/home"
+@using System.Security.Claims
+
+<PageTitle>Home</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        @{
+            var user = context.User;
+            var identity = user.Identity;
+            var authType = identity?.AuthenticationType ?? "N/A";
+            var name = identity?.Name ?? "Anonymous";
+            var isAuthenticated = identity?.IsAuthenticated == true;
+            var allClaims = user.Claims.ToList();
+
+            var roleClaims = allClaims
+            .Where(c => c.Type == ClaimTypes.Role || c.Type == "role")
+            .Select(c => c.Value)
+            .Distinct()
+            .ToList();
+
+            var expClaim = allClaims.FirstOrDefault(c => c.Type == "exp");
+            string? tokenExpiry = null;
+            if (expClaim != null && long.TryParse(expClaim.Value, out var expUnix))
+            {
+                var expiryDate = DateTimeOffset.FromUnixTimeSeconds(expUnix).ToLocalTime();
+                tokenExpiry = expiryDate.ToString("f");
+            }
+        }
+
+        <h2>Welcome, @name!</h2>
+        <p><strong>Authenticated:</strong> @isAuthenticated</p>
+        <p><strong>Auth Type:</strong> @authType</p>
+        @if (tokenExpiry != null)
+        {
+            <p><strong>Token Expiration:</strong> @tokenExpiry</p>
+        }
+
+        <h3>Claims (@allClaims.Count)</h3>
+        @if (allClaims.Any())
+        {
+            <ul>
+                @foreach (var role in allClaims)
+                {
+                    <p>@role</p>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No roles found.</p>
+        }
+
+        @if (roleClaims.Any())
+        {
+            <ul>
+                @foreach (var role in roleClaims)
+                {
+                    <p>@role</p>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No roles found.</p>
+        }
+    </Authorized>
+</AuthorizeView>
+
+

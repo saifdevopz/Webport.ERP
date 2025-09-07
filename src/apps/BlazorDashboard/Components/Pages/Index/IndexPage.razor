@@ -1,0 +1,35 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+
+<CascadingAuthenticationState>
+    <p>Redirecting...</p>
+</CascadingAuthenticationState>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationState { get; set; }
+
+    private ClaimsPrincipal? User;
+    private bool _navigated = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !_navigated)
+        {
+            var authState = await AuthenticationState!;
+            User = authState.User;
+
+            _navigated = true;
+
+            if (User.Identity?.IsAuthenticated == true && AuthenticationState is not null)
+            {
+                _NavigationManager.NavigateTo("/dashboard/home", forceLoad: false);
+            }
+            else
+            {
+                _NavigationManager.NavigateTo("/account/login", forceLoad: false);
+            }
+        }
+    }
+}

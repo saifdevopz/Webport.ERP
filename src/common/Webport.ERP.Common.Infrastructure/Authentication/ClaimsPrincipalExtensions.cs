@@ -19,9 +19,14 @@ public static class ClaimsPrincipalExtensions
 
     public static string GetUserEmail(this ClaimsPrincipal? principal)
     {
-        return principal?.FindFirst(ClaimTypes.Email)?.Value ??
-                     throw new CustomException("User Email is unavailable");
+        var email = principal?.FindFirst(ClaimTypes.Email)?.Value;
+
+        if (string.IsNullOrWhiteSpace(email))
+            return "System Admin";
+
+        return email;
     }
+
 
     public static int GetUserId(this ClaimsPrincipal? principal)
     {

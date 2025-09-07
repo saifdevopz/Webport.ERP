@@ -1,24 +1,48 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="app-wrapper">
-    <SidebarComponent IsActive="@isSidebarActive" />
-    <div @onclick="ToggleSidebar" class="overlay @(isSidebarActive ? "active" : "")"></div>
-    <main class="main-container">
-        <div class="main-header-div">
-            <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
+<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        <AuthorizeView>
+            <Authorized>
+                <div class="app-wrapper">
+                    <SidebarComponent IsActive="@isSidebarActive" />
+                    <div @onclick="ToggleSidebar" class="overlay @(isSidebarActive ? "active" : "")"></div>
+                    <main class="main-container">
+                        <div class="main-header-div">
+                            <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
 
-            <div class="div"><h1>Dashboard</h1></div>
-        </div>
-        <div class="main-body-div">
-            <h1>Inventory</h1>
-        </div>
-        <div class="main-footer-div">
-            <h1>Inventory</h1>
-        </div>
-    </main>
-</div>
+                            <div class="div"><h1>Dashboard</h1></div>
+                        </div>
+                        <div class="main-body-div">
+                            <h1>Inventory</h1>
+                        </div>
+                        <div class="main-footer-div">
+                            <h1>Inventory</h1>
+                        </div>
+                    </main>
+                </div>
+            </Authorized>
+            <NotAuthorized>@Body</NotAuthorized>
+        </AuthorizeView>
+    </ChildContent>
 
-@code{
+    <ErrorContent Context="exception">
+        <p>Error Occurred!!! -  From Main</p>
+        <p>@exception.GetType()</p>
+        <p>@exception.Message</p>
+        <p>@exception.StackTrace</p>
+        <button onclick ="() => errorBoundary?.Recover()">Try Again</button>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+
     private bool isSidebarActive = false;
 
     private void ToggleSidebar()
