@@ -1,6 +1,4 @@
-﻿
-
-namespace Webport.ERP.Identity.Presentation.Endpoints.Permissions;
+﻿namespace Webport.ERP.Identity.Presentation.Endpoints.Permissions;
 
 internal sealed class GetPermissionsByUserIdEndpoint : IEndpoint
 {

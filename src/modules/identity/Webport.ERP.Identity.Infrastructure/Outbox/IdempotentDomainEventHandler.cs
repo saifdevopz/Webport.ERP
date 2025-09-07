@@ -4,6 +4,7 @@ using Webport.ERP.Common.Application.Database;
 using Webport.ERP.Common.Application.Messaging;
 using Webport.ERP.Common.Domain.Abstractions;
 using Webport.ERP.Common.Infrastructure.Outbox;
+using Webport.ERP.Identity.Infrastructure.Common;
 
 namespace Webport.ERP.Identity.Infrastructure.Outbox;
 

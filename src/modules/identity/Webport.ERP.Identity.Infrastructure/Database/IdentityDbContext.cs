@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Webport.ERP.Common.Infrastructure.Interceptors;
 using Webport.ERP.Common.Infrastructure.Outbox;
+using Webport.ERP.Identity.Infrastructure.Common;
 
 namespace Webport.ERP.Identity.Infrastructure.Database;
 

@@ -1,6 +1,6 @@
 ﻿using Dapper;
 
-namespace Webport.ERP.Identity.Application.Features.Permissions;
+namespace Webport.ERP.Identity.Application.Entities.Permissions;
 
 public class GetPermissionsByUserIdQueryHandler(IDbConnectionFactory dbConnection)
     : IQueryHandler<GetPermissionsByUserIdQuery, GetPermissionsByUserIdQueryResult>

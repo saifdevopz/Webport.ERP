@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Users;
+namespace Webport.ERP.Identity.Application.Entities.Users;
 
 public class CreateUserCommandHandler(IIdentityRepository<UserM> repository)
     : ICommandHandler<CreateUserCommand>

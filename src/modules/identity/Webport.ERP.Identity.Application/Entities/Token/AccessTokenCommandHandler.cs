@@ -2,7 +2,7 @@
 using Webport.ERP.Identity.Application.Dtos;
 using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Token;
+namespace Webport.ERP.Identity.Application.Entities.Token;
 
 public class AccessTokenCommandHandler(ITokenService tokenService)
     : ICommandHandler<AccessTokenCommand, AccessTokenResult>

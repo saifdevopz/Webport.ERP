@@ -5,18 +5,18 @@ public sealed class CategoryM : AggregateRoot, IMustHaveTenant
     public int TenantId { get; set; }
     public int CategoryId { get; set; }
     public required string CategoryCode { get; set; }
-    public required string CategoryDesc { get; set; }    
+    public required string CategoryDesc { get; set; }
 
     public static CategoryM Create
     (
-        string pCategoryCode,
-        string pCategoryDesc
+        string categoryCode,
+        string categoryDesc
     )
     {
         CategoryM model = new()
         {
-            CategoryCode = pCategoryCode,
-            CategoryDesc = pCategoryDesc,
+            CategoryCode = categoryCode,
+            CategoryDesc = categoryDesc,
         };
 
         return model;

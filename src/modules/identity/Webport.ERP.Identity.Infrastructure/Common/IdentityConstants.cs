@@ -1,4 +1,4 @@
-﻿namespace Webport.ERP.Identity.Infrastructure;
+﻿namespace Webport.ERP.Identity.Infrastructure.Common;
 
 internal static class IdentityConstants
 {

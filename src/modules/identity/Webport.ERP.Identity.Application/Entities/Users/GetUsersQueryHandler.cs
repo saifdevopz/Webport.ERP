@@ -1,6 +1,6 @@
 ﻿using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Users;
+namespace Webport.ERP.Identity.Application.Entities.Users;
 
 public class GetUsersQueryHandler(IIdentityRepository<UserM> repository)
     : IQueryHandler<GetUsersQuery, GetUsersQueryResult>

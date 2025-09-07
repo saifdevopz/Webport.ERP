@@ -11,7 +11,7 @@ public sealed class InventoryDbContext : DbContext
 
     public InventoryDbContext(
         DbContextOptions<InventoryDbContext> options,
-        TenantProvider tenantProvider) 
+        TenantProvider tenantProvider)
         : base(options)
     {
         _tenantId = tenantProvider.TenantId;
@@ -73,7 +73,7 @@ public sealed class InventoryDbContext : DbContext
             {
                 case EntityState.Added:
                 case EntityState.Modified:
-                    entry.Entity.TenantId = _tenantId; 
+                    entry.Entity.TenantId = _tenantId;
                     break;
             }
         }

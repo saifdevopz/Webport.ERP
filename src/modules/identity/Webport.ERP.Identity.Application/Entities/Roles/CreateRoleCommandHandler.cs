@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Roles;
+namespace Webport.ERP.Identity.Application.Entities.Roles;
 
 public class CreateRoleCommandHandler(IIdentityRepository<RoleM> repository)
     : ICommandHandler<CreateRoleCommand>

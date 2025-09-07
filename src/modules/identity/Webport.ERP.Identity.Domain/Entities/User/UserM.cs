@@ -40,7 +40,7 @@ public sealed class UserM : AggregateRoot
             PasswordSalt = passwordSalt
         };
 
-        //model.AddDomainEvent(new UserCreatedDomainEvent(model.UserId));
+        model.AddDomainEvent(new UserCreatedDomainEvent(model.TenantId, model.UserId));
 
         return model;
     }

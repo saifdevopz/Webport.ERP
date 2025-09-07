@@ -12,7 +12,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["Directory.Build.props", "."]
 COPY ["src/api/Webport.ERP.Api/Webport.ERP.Api.csproj", "src/api/Webport.ERP.Api/"]
+COPY ["src/modules/identity/Webport.ERP.Identity.Infrastructure/Webport.ERP.Identity.Infrastructure.csproj", "src/modules/identity/Webport.ERP.Identity.Infrastructure/"]
+COPY ["src/common/Webport.ERP.Common.Infrastructure/Webport.ERP.Common.Infrastructure.csproj", "src/common/Webport.ERP.Common.Infrastructure/"]
+COPY ["src/common/Webport.ERP.Common.Application/Webport.ERP.Common.Application.csproj", "src/common/Webport.ERP.Common.Application/"]
+COPY ["src/common/Webport.ERP.Common.Domain/Webport.ERP.Common.Domain.csproj", "src/common/Webport.ERP.Common.Domain/"]
+COPY ["src/modules/identity/Webport.ERP.Identity.Application/Webport.ERP.Identity.Application.csproj", "src/modules/identity/Webport.ERP.Identity.Application/"]
+COPY ["src/modules/identity/Webport.ERP.Identity.Domain/Webport.ERP.Identity.Domain.csproj", "src/modules/identity/Webport.ERP.Identity.Domain/"]
+COPY ["src/modules/identity/Webport.ERP.Identity.Presentation/Webport.ERP.Identity.Presentation.csproj", "src/modules/identity/Webport.ERP.Identity.Presentation/"]
+COPY ["src/common/Webport.ERP.Common.Presentation/Webport.ERP.Common.Presentation.csproj", "src/common/Webport.ERP.Common.Presentation/"]
+COPY ["src/modules/inventory/Webport.ERP.Inventory.Infrastructure/Webport.ERP.Inventory.Infrastructure.csproj", "src/modules/inventory/Webport.ERP.Inventory.Infrastructure/"]
+COPY ["src/modules/inventory/Webport.ERP.Inventory.Application/Webport.ERP.Inventory.Application.csproj", "src/modules/inventory/Webport.ERP.Inventory.Application/"]
+COPY ["src/modules/inventory/Webport.ERP.Inventory.Domain/Webport.ERP.Inventory.Domain.csproj", "src/modules/inventory/Webport.ERP.Inventory.Domain/"]
+COPY ["src/modules/inventory/Webport.ERP.Inventory.Presentation/Webport.ERP.Inventory.Presentation.csproj", "src/modules/inventory/Webport.ERP.Inventory.Presentation/"]
 RUN dotnet restore "./src/api/Webport.ERP.Api/Webport.ERP.Api.csproj"
 COPY . .
 WORKDIR "/src/src/api/Webport.ERP.Api"

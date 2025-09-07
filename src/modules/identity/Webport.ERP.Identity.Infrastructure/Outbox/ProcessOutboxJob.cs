@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,6 +12,7 @@ using Webport.ERP.Common.Domain.Abstractions;
 using Webport.ERP.Common.Infrastructure.Clock;
 using Webport.ERP.Common.Infrastructure.Outbox;
 using Webport.ERP.Common.Infrastructure.Serialization;
+using Webport.ERP.Identity.Infrastructure.Common;
 
 namespace Webport.ERP.Identity.Infrastructure.Outbox;
 

@@ -1,6 +1,6 @@
 ﻿using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Tenant;
+namespace Webport.ERP.Identity.Application.Entities.Tenant;
 
 internal sealed class GetTenantsQueryHandler(IIdentityRepository<TenantM> repository)
     : IQueryHandler<GetTenantsQuery, GetTenantsQueryResult>

@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Extensions.Configuration;
 using System.Data.Common;
 using Webport.ERP.Inventory.Infrastructure.Common;
 

@@ -1,6 +1,6 @@
 ﻿using Webport.ERP.Common.Application.Mail;
 
-namespace Webport.ERP.Identity.Application.Features.Users.Events;
+namespace Webport.ERP.Identity.Application.Entities.Users.Events;
 
 internal sealed class UserCreatedDomainEventHandler(IMailService mailService)
     : DomainEventDispatcher<UserCreatedDomainEvent>

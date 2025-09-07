@@ -13,14 +13,14 @@ public sealed class ItemM : AggregateRoot, IMustHaveTenant
 
     public static ItemM Create
     (
-        string pItemCode,
-        string pItemDesc
+        string itemCode,
+        string itemDesc
     )
     {
         ItemM model = new()
         {
-            ItemCode = pItemCode,
-            ItemDesc = pItemDesc,
+            ItemCode = itemCode,
+            ItemDesc = itemDesc,
         };
 
         return model;

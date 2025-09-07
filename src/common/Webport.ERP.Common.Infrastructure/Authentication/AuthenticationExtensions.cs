@@ -48,8 +48,6 @@ public static class AuthenticationExtensions
 #pragma warning restore CA5404 // Do not disable token validation checks
             });
 
-        services.AddAuthorization();
-
         return services;
     }
 }

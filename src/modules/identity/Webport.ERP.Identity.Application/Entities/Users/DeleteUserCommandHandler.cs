@@ -1,6 +1,6 @@
 ﻿using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Users;
+namespace Webport.ERP.Identity.Application.Entities.Users;
 
 public class DeleteUserCommandHandler(IIdentityRepository<UserM> repository)
     : ICommandHandler<DeleteUserCommand>

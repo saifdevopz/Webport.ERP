@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Webport.ERP.Common.Application.Messaging;
 using Webport.ERP.Common.Presentation.Endpoints;
 using Webport.ERP.Identity.Application.Interfaces;
+using Webport.ERP.Identity.Infrastructure.Common;
 using Webport.ERP.Identity.Infrastructure.Database;
 using Webport.ERP.Identity.Infrastructure.Database.DataAccess;
 using Webport.ERP.Identity.Infrastructure.Outbox;

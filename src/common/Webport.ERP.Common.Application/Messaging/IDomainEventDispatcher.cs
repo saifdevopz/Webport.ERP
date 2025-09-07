@@ -1,6 +1,4 @@
-﻿using Webport.ERP.Common.Domain.Abstractions;
-
-namespace Webport.ERP.Common.Application.Messaging;
+﻿namespace Webport.ERP.Common.Application.Messaging;
 
 public interface IDomainEventDispatcher<in TDomainEvent> : IDomainEventDispatcher
     where TDomainEvent : IDomainEvent

@@ -6,11 +6,11 @@ public sealed class TenantM : AggregateRoot
     public required string TenantName { get; set; }
     public DateTime LicenceExpiryDate { get; set; }
 
-    public static TenantM Create(string pTenantName)
+    public static TenantM Create(string tenantName)
     {
         TenantM model = new()
         {
-            TenantName = pTenantName,
+            TenantName = tenantName,
             LicenceExpiryDate = DateTime.UtcNow.AddDays(30),
         };
 

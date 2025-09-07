@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Tenant;
+namespace Webport.ERP.Identity.Application.Entities.Tenant;
 
 public class CreateTenantCommandHandler(IIdentityRepository<TenantM> repository)
     : ICommandHandler<CreateTenantCommand>

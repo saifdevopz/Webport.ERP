@@ -1,6 +1,6 @@
 ﻿using Webport.ERP.Identity.Application.Interfaces;
 
-namespace Webport.ERP.Identity.Application.Features.Roles;
+namespace Webport.ERP.Identity.Application.Entities.Roles;
 
 public class GetRolesQueryHandler(IIdentityRepository<RoleM> repository)
     : IQueryHandler<GetRolesQuery, GetRolesQueryResult>

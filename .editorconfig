@@ -82,12 +82,6 @@ csharp_style_expression_bodied_local_functions = false:silent
 # Consider calling ConfigureAwait on the awaited task
 dotnet_diagnostic.CA2007.severity = none
 
-# Validate arguments of public methods
-#dotnet_diagnostic.CA1062.severity = none
-
-# Consider making public types internal
-#dotnet_diagnostic.CA1515.severity = none
-
 # Avoid empty interfaces
 dotnet_diagnostic.CA1040.severity = none
 
@@ -100,18 +94,18 @@ dotnet_diagnostic.CA1848.severity = none
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
-# S125: Sections of code should not be commented out
-dotnet_diagnostic.S125.severity = none
-
-# S2326: General or reserved exceptions should never be thrown
-dotnet_diagnostic.S2326.severity = none
-
 # CA2326: Do not use insecure JsonSerializerSettings
 dotnet_diagnostic.CA2327.severity = none
 
 # CA2326: Do not use TypeNameHandling values other than None
 dotnet_diagnostic.CA2326.severity = none
 
-# Validate arguments of public methods
+# CA1062: Validate arguments of public methods
 dotnet_diagnostic.CA1062.severity = none
+
+# S125: Sections of code should not be commented out
+dotnet_diagnostic.S125.severity = none
+
+# S2326: General or reserved exceptions should never be thrown
+dotnet_diagnostic.S2326.severity = none
 
