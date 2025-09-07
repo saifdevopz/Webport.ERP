@@ -19,10 +19,10 @@ jobs:
       
       - name: Build and Push Docker Image using Docker Compose
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/webport-erp
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/webport-erp-api
           TAG=$(echo $GITHUB_SHA | cut -c1-7)
-          docker compose -f docker-compose.yml build
-          docker compose -f docker-compose.yml push
+          docker compose -f docker-compose.yml build webport.erp.api
+          docker compose -f docker-compose.yml push webport.erp.api          
 
   copy_files:
     name: Copy files to server
@@ -52,7 +52,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /root/webport-system
-            docker-compose -f docker-compose.yml down || true
-            docker image prune -a -f
-            docker-compose pull
-            docker-compose -f docker-compose.yml up -d
+            docker-compose -f docker-compose.yml stop webport.erp.api || true
+            docker-compose -f docker-compose.yml rm -s -f webport.erp.api || true
+            docker-compose -f docker-compose.yml pull webport.erp.api         
+            docker-compose -f docker-compose.yml up -d webport.erp.api               
