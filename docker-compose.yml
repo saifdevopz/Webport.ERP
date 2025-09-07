@@ -22,6 +22,30 @@ services:
     networks:
       - proxy
 
+
+  webport.erp.dashboard:
+    image: ghcr.io/saifdevopz/webport-erp-dashboard:latest
+    container_name: webport-erp-dashboard
+    build:
+      context: .
+      dockerfile: src/apps/BlazorDashboard/Dockerfile
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "5050:8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.webport-erp-dashboard.loadbalancer.server.port=8080"
+      - "traefik.http.routers.webport-erp-dashboard.entrypoints=https"
+      - "traefik.http.routers.webport-erp-dashboard.rule=Host(`tenantblazor.webport.co.za`)"
+      - "traefik.http.routers.webport-erp-dashboard.tls=true"
+      - "traefik.http.routers.webport-erp-dashboard.tls.certresolver=cloudflare"
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+    networks:
+      - proxy
+
+
 networks:
   proxy:
     external: true

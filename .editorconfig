@@ -94,6 +94,12 @@ dotnet_diagnostic.CA1848.severity = none
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
+# CA1002: Do not expose generic lists
+dotnet_diagnostic.CA1002.severity = none
+
+# CA1515: Consider making public types internal
+dotnet_diagnostic.CA1515.severity = none
+
 # CA2326: Do not use insecure JsonSerializerSettings
 dotnet_diagnostic.CA2327.severity = none
 
@@ -108,4 +114,7 @@ dotnet_diagnostic.S125.severity = none
 
 # S2326: General or reserved exceptions should never be thrown
 dotnet_diagnostic.S2326.severity = none
+
+
+
 

@@ -1,0 +1,84 @@
+﻿@using static BlazorDashboard.Components.Layout.Sidebar.SidebarData
+
+<aside class="sidebar @(IsActive ? "active" : "")" id="sidebar">
+    <div class="sidebar-header">
+        <div class="company-container">
+            <img src="images/logo.jpg" alt="logo" />
+            <span class="company-name">Webport</span>
+        </div>
+
+        <i class="fa-regular fa-square-caret-left toggle-arrow"></i>
+    </div>
+    <nav class="sidebar-navbar">
+        <ul>
+            @foreach (var group in menuGroups)
+            {
+                <li class="menu-title-li">@group.Title</li>
+                @foreach (var item in group.Items)
+                {
+                    <MenuItemComponent MenuItem="@item"
+                                       MenuItemClickCallback="MenuItemClick" />
+                }
+            }
+        </ul>
+    </nav>
+</aside>
+
+@code {
+    [Inject]
+    private IJSRuntime JS { get; set; } = default!;
+
+    [Parameter] public bool IsActive { get; set; }
+
+    readonly List<MenuGroup> menuGroups = SidebarData.GetMenuGroups();
+
+    private async Task MenuItemClick(MenuItem clickedItem)
+    {
+        await JS.InvokeVoidAsync("console.log", $"Clicked: {clickedItem.Title}");
+
+        // Case 1: top-level item
+        var groupWithClickedItem = menuGroups.FirstOrDefault(group => group.Items.Contains(clickedItem));
+        if (groupWithClickedItem != null)
+        {
+            // Collapse ALL groups, not just the current one
+            foreach (var item in menuGroups.SelectMany(g => g.Items).Where(item => item != clickedItem))
+            {
+                item.IsOpened = false;
+            }
+
+            clickedItem.IsOpened = !clickedItem.IsOpened;
+            return;
+        }
+
+        // Case 2: child or grandchild → search across all groups
+        foreach (var group in menuGroups)
+        {
+            var parent = FindParent(clickedItem, group.Items);
+            if (parent != null && parent.ChildMenuItems != null)
+            {
+                foreach (var sibling in parent.ChildMenuItems.Where(sibling => sibling != clickedItem))
+                {
+                    sibling.IsOpened = false;
+                }
+
+                clickedItem.IsOpened = !clickedItem.IsOpened;
+                return;
+            }
+        }
+    }
+
+    private MenuItem? FindParent(MenuItem target, IEnumerable<MenuItem> items)
+    {
+        foreach (var item in items)
+        {
+            if (item.ChildMenuItems?.Contains(target) == true)
+                return item;
+
+            var parent = FindParent(target, item.ChildMenuItems ?? []);
+            if (parent != null)
+                return parent;
+        }
+
+        return null;
+    }
+ }

@@ -1,0 +1,28 @@
+﻿@inherits LayoutComponentBase
+
+<div class="app-wrapper">
+    <SidebarComponent IsActive="@isSidebarActive" />
+    <div @onclick="ToggleSidebar" class="overlay @(isSidebarActive ? "active" : "")"></div>
+    <main class="main-container">
+        <div class="main-header-div">
+            <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
+
+            <div class="div"><h1>Dashboard</h1></div>
+        </div>
+        <div class="main-body-div">
+            <h1>Inventory</h1>
+        </div>
+        <div class="main-footer-div">
+            <h1>Inventory</h1>
+        </div>
+    </main>
+</div>
+
+@code{
+    private bool isSidebarActive = false;
+
+    private void ToggleSidebar()
+    {
+        isSidebarActive = !isSidebarActive;
+    }
+}

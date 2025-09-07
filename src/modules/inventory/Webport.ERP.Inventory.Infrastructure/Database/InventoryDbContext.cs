@@ -5,17 +5,11 @@ using Webport.ERP.Inventory.Infrastructure.Common;
 
 namespace Webport.ERP.Inventory.Infrastructure.Database;
 
-public sealed class InventoryDbContext : DbContext
+public sealed class InventoryDbContext(
+    DbContextOptions<InventoryDbContext> options,
+    TenantProvider tenantProvider) : DbContext(options)
 {
-    private readonly int _tenantId;
-
-    public InventoryDbContext(
-        DbContextOptions<InventoryDbContext> options,
-        TenantProvider tenantProvider)
-        : base(options)
-    {
-        _tenantId = tenantProvider.TenantId;
-    }
+    private readonly int _tenantId = tenantProvider.TenantId;
 
     internal DbSet<CategoryM> Categories => Set<CategoryM>();
     internal DbSet<ItemM> Items => Set<ItemM>();
