@@ -4,12 +4,16 @@ using BlazorDashboard.Common.Services.Implementations;
 using BlazorDashboard.Common.Services.Interfaces;
 using BlazorDashboard.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Mudblazor
+builder.Services.AddMudServices();
 
 // Http Client
 builder.Services.AddHttpClient<BaseHttpClient>((sp, client) =>

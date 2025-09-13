@@ -1,0 +1,56 @@
+﻿@page "/role/index"
+@attribute [Authorize(Roles = "Customer")]
+
+@using MudBlazor
+@using Webport.ERP.Common.Domain.DataTransferObjects.System
+
+<MudText Typo="Typo.h6">Role Index</MudText>
+
+<MudDataGrid Items="@Roles.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
+    <ToolBarContent>
+        <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
+        <MudSpacer />
+        <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="_ => _.RoleId" Title="Role Id" />
+        <PropertyColumn Property="_ => _.RoleName" Title="Role Name" />               
+        <TemplateColumn>
+            <CellTemplate>
+                <MudStack Row>
+                    <MudIconButton Href="@($"role/modify/{context.Item.RoleId}")" Icon="@Icons.Material.Filled.Edit" Color="Color.Success" />
+                    <MudIconButton OnClick="@(() => Delete(context.Item.RoleId))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="RoleDto" />
+    </PagerContent>
+</MudDataGrid>
+
+
+@code {
+    private List<RoleDto> Roles = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetRoles();
+    }
+
+    private async Task GetRoles()
+    {
+        var response = await _DataService.GetAllAsync<RolesWrapper<RoleDto>>("role", true);
+
+        if (response.IsSuccess)
+        {
+            Roles = response.Data.roles.ToList();
+        }
+    }
+
+    private async Task Delete(int id)
+    {
+        await _DataService.DeleteByIdAsync("role", id);
+        await GetRoles();        
+    }
+}

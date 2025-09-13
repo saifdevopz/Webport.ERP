@@ -4,13 +4,16 @@
     <div class="sidebar-header">
         <div class="company-container">
             <img src="images/logo.jpg" alt="logo" />
-            <span class="company-name">Webport</span>
+            <AuthorizeView>
+                <span class="company-name">@context.User.FindFirst("TenantName")?.Value</span>
+            </AuthorizeView>            
         </div>
 
         <i class="fa-regular fa-square-caret-left toggle-arrow"></i>
     </div>
     <nav class="sidebar-navbar">
         <ul>
+            <li class="menu-title-li" @onclick="LogoutClicked">Logout</li>
             @foreach (var group in menuGroups)
             {
                 <li class="menu-title-li">@group.Title</li>
@@ -20,6 +23,7 @@
                                        MenuItemClickCallback="MenuItemClick" />
                 }
             }
+
         </ul>
     </nav>
 </aside>
@@ -32,9 +36,21 @@
 
     readonly List<MenuGroup> menuGroups = SidebarData.GetMenuGroups();
 
+    private void LogoutClicked()
+    {
+        _NavigationManager.NavigateTo("/logout", forceLoad: true);
+    }
+
     private async Task MenuItemClick(MenuItem clickedItem)
     {
         await JS.InvokeVoidAsync("console.log", $"Clicked: {clickedItem.Title}");
+
+        if (!string.IsNullOrWhiteSpace(clickedItem.Href))
+        {
+            // Navigate to the link
+            _NavigationManager.NavigateTo(clickedItem.Href);
+            return;
+        }
 
         // Case 1: top-level item
         var groupWithClickedItem = menuGroups.FirstOrDefault(group => group.Items.Contains(clickedItem));

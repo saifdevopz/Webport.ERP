@@ -1,4 +1,10 @@
-﻿@inherits LayoutComponentBase
+﻿@using MudBlazor
+@inherits LayoutComponentBase
+
+@* Required Mudblazor Tags *@
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
 
 <ErrorBoundary @ref="errorBoundary">
     <ChildContent>
@@ -12,9 +18,10 @@
                             <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
 
                             <div class="div"><h1>Dashboard</h1></div>
+                        
                         </div>
                         <div class="main-body-div">
-                            <h1>Inventory</h1>
+                            @Body
                         </div>
                         <div class="main-footer-div">
                             <h1>Inventory</h1>
@@ -49,4 +56,6 @@
     {
         isSidebarActive = !isSidebarActive;
     }
+
+
 }

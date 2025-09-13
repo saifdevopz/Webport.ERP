@@ -1,4 +1,5 @@
-﻿namespace BlazorDashboard.Components.Layout.Sidebar;
+﻿
+namespace BlazorDashboard.Components.Layout.Sidebar;
 
 internal static class SidebarData
 {
@@ -10,6 +11,11 @@ internal static class SidebarData
 
     public static List<MenuGroup> GetMenuGroups() =>
     [
+        new MenuGroup
+        {
+            Title = "Identity Management",
+            Items = GetIdentityItems()
+        },
         new MenuGroup
         {
             Title = "Standard Items",
@@ -27,6 +33,19 @@ internal static class SidebarData
         },
     ];
 
+    public static List<MenuItem> GetIdentityItems() =>
+    [
+        new MenuItem(title: "Inventory", icon: "ri-archive-2-fill", suffix: new("Hot", "primary"), childMenuItems:
+        [
+            new MenuItem(href:"#", title:"Grid"),
+            new MenuItem(title:"Role", childMenuItems:
+            [
+                new MenuItem(href:"/role/index", title:"Index"),
+                new MenuItem(href:"#", title:"Add/Modify")
+            ])
+        ]),
+    ];
+
     public static List<MenuItem> GetBasicItems() =>
     [
         new MenuItem(href:"/home", title: "Home", icon:"ri-home-3-fill"),
@@ -36,7 +55,7 @@ internal static class SidebarData
 
     public static List<MenuItem> GetStandardMenuItems() =>
     [
-        new MenuItem(href:"/home", title: "Home", icon:"ri-home-3-fill"),
+        new MenuItem(href:"/role/index", title: "Roles", icon:"ri-home-3-fill"),
         new MenuItem(href:"/counter", title: "Counter", icon:"ri-add-box-fill"),
         new MenuItem(href:"/weather", title: "Weather", icon:"ri-bar-chart-horizontal-line"),
 
