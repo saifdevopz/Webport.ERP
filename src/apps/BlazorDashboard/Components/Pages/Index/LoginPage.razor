@@ -28,7 +28,7 @@
         <div class="right-panel">
             <div class="login-box">
                 <div class="login-header">
-                    <header>Welcome</header>
+                    <header>Welcome Boss</header>
                     <p>We are happy to have you back!</p>
                 </div>
                 <EditForm Model="@model" OnValidSubmit="HandleLogin">
@@ -89,15 +89,23 @@
     public Task<AuthenticationState>? AuthenticationState { get; set; }
     public string? ErrorMessage { get; set; }
     internal LoginDto model { get; set; } = new();
+    private bool _navigated;
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await CheckUserAuthentication();
-
         #if DEBUG
             model.Email = "customer1@gmail.com";
             model.Password = "12345678";
         #endif
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !_navigated)
+        {
+            await CheckUserAuthentication();
+            _navigated = true;
+        }
     }
 
     private async Task CheckUserAuthentication()

@@ -35,14 +35,9 @@ internal static class SidebarData
 
     public static List<MenuItem> GetIdentityItems() =>
     [
-        new MenuItem(title: "Inventory", icon: "ri-archive-2-fill", suffix: new("Hot", "primary"), childMenuItems:
+        new MenuItem(title: "Identity", icon: "ri-archive-2-fill", suffix: new("Hot", "primary"), childMenuItems:
         [
-            new MenuItem(href:"#", title:"Grid"),
-            new MenuItem(title:"Role", childMenuItems:
-            [
-                new MenuItem(href:"/role/index", title:"Index"),
-                new MenuItem(href:"#", title:"Add/Modify")
-            ])
+            new MenuItem(href:"/role/index", title:"Roles"),
         ]),
     ];
 
