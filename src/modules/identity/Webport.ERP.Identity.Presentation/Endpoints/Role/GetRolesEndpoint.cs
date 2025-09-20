@@ -14,6 +14,7 @@ internal sealed class GetRolesEndpoint : IEndpoint
 
             return response;
         })
-        .WithTags(Tags.Role);
+        .WithTags(Tags.Role)
+        .RequireAuthorization();
     }
 }

@@ -187,14 +187,6 @@ body {
     background-color: #695cfe;
 }
 
-.main-footer-div {
-    position: fixed;
-    bottom: 0;
-    height: var(--footer-height);
-    width: 100%;
-    background-color: #695cfe;
-}
-
 /* ============= BUTTONS =============== */
 
 .menu-toggle {
@@ -254,5 +246,17 @@ body {
 
 @media (max-width: 400px) {
     .sidebar {
+    }
+}
+
+/* ============= ANIMATION =============== */  
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }

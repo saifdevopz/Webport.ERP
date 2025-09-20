@@ -9,8 +9,14 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
+    /// <summary>
+    /// Holds the current value of the counter displayed on the page.
+    /// </summary>
     private int currentCount = 0;
 
+    /// <summary>
+    /// Increments the <see cref="currentCount"/> by one when the button is clicked.
+    /// </summary>
     private void IncrementCount()
     {
         currentCount++;

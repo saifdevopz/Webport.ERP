@@ -3,7 +3,7 @@
 @using System.Security.Claims
 
 <CascadingAuthenticationState>
-    <p>Redirecting...</p>
+    <BlazorDashboard.Components.Shared.Loader />
 </CascadingAuthenticationState>
 
 @code {
@@ -23,7 +23,7 @@
             _navigated = true;
 
             if (User.Identity?.IsAuthenticated == true && AuthenticationState is not null)
-            {
+            {               
                 _NavigationManager.NavigateTo("/dashboard/home", forceLoad: false);
             }
             else

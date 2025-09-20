@@ -22,7 +22,7 @@ public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantH
     {
         try
         {
-            HttpClient client = GetClient(useBaseClient);
+            HttpClient client = _baseHttpClient.GetPrivateHttpClient();
             var response = await client.GetFromJsonAsync<Result<T>>(source);
 
             if (response == null)
@@ -43,7 +43,7 @@ public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantH
     {
         try
         {
-            HttpClient client = GetClient(useBaseClient);
+            HttpClient client = _baseHttpClient.GetPrivateHttpClient();
             var response = await client.GetFromJsonAsync<Result<T>>($"{basePath}/{id}");
 
             if (response == null)
@@ -60,11 +60,11 @@ public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantH
         }
     }
 
-    public async Task<Result> PostAsync<T>(string source, T obj, bool useBaseClient = false)
+    public async Task<Result> PostAsync<T>(string source, T obj, bool useBaseClient = true)
     {
         try
         {
-            HttpClient client = GetClient(useBaseClient);
+            HttpClient client = _baseHttpClient.GetPrivateHttpClient();
             var response = await client.PostAsJsonAsync(source, obj);
 
             if (response == null)
@@ -99,7 +99,7 @@ public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantH
     {
         try
         {
-            HttpClient client = GetClient(true);
+            HttpClient client = _baseHttpClient.GetPrivateHttpClient();
             var response = await client.PutAsJsonAsync(source, obj);
 
             var result = response.Content.ReadFromJsonAsync<Result>();
