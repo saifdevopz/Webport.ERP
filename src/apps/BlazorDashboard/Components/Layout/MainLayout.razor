@@ -1,4 +1,5 @@
-﻿@using MudBlazor
+﻿@using BlazorDashboard.Components.Shared
+@using MudBlazor
 @inherits LayoutComponentBase
 
 @* Required Mudblazor Tags *@
@@ -9,23 +10,21 @@
 <ErrorBoundary @ref="errorBoundary">
     <ChildContent>
         <AuthorizeView>
-            <Authorized>
-                <div class="app-wrapper">
-                    <SidebarComponent IsActive="@isSidebarActive" />
-                    <div @onclick="ToggleSidebar" class="overlay @(isSidebarActive ? "active" : "")"></div>
-                    <main class="main-container">
-                        <div class="main-header-div">
-                            <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
-
-                            <div class="div"><h1>Dashboard</h1></div>
-                        
-                        </div>
-                        <div class="main-body-div">
-                            @Body
-                        </div>
-                        <BlazorDashboard.Components.Shared.FooterComponent />
+            <Authorized>               
+                <SidebarComponent IsActive="@isSidebarActive" />
+                <div class="app">
+                    <header class="app-header">
+                        <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
+                        <div class="div"><h1>Dashboard</h1></div>
+                    </header>
+                    <main class="app-body">
+                        @Body
                     </main>
-                </div>
+                    <footer class="app-footer">
+                        <span>© @DateTime.Now.Year WEBPORT. All rights reserved.</span>
+                    </footer>
+                    <div @onclick="ToggleSidebar" class="overlay @(isSidebarActive ? "active" : "")"></div>
+                </div>       
             </Authorized>
             <NotAuthorized>@Body</NotAuthorized>
         </AuthorizeView>

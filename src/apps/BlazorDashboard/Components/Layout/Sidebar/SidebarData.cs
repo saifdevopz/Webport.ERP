@@ -13,23 +13,18 @@ internal static class SidebarData
     [
         new MenuGroup
         {
-            Title = "Identity Management",
+            Title = "Identity",
             Items = GetIdentityItems()
         },
         new MenuGroup
         {
-            Title = "Standard Items",
+            Title = "Navigation",
             Items = GetStandardMenuItems()
         },
         new MenuGroup
         {
-            Title = "General Items",
+            Title = "Development",
             Items = GetGeneralMenuItems()
-        },
-        new MenuGroup
-        {
-            Title = "General Items",
-            Items = GetBasicItems()
         },
     ];
 
@@ -41,56 +36,11 @@ internal static class SidebarData
         ]),
     ];
 
-    public static List<MenuItem> GetBasicItems() =>
-    [
-        new MenuItem(href:"/home", title: "Home", icon:"ri-home-3-fill"),
-        new MenuItem(href:"/counter", title: "Counter", icon:"ri-add-box-fill"),
-        new MenuItem(href:"/weather", title: "Weather", icon:"ri-bar-chart-horizontal-line"),
-    ];
-
     public static List<MenuItem> GetStandardMenuItems() =>
     [
-        new MenuItem(href:"/role/index", title: "Roles", icon:"ri-home-3-fill"),
+        new MenuItem(href:"/home", title: "Home", icon:"ri-add-box-fill"),
         new MenuItem(href:"/counter", title: "Counter", icon:"ri-add-box-fill"),
-        new MenuItem(href:"/weather", title: "Weather", icon:"ri-bar-chart-horizontal-line"),
-
-        // ================== INVENTORY ==================
-        new MenuItem(title:"Inventory", icon:"ri-archive-2-fill", suffix:new("Hot","primary"), childMenuItems:
-        [
-            new MenuItem(title:"Stock", childMenuItems:
-            [
-                new MenuItem(href:"#", title:"Stock Control"),
-                new MenuItem(href:"#", title:"Bin Locations"),
-                new MenuItem(href:"#", title:"Stock Adjustments"),
-                new MenuItem(href:"#", title:"Stock Valuation"),
-                new MenuItem(href:"#", title:"Minimum Levels"),
-                new MenuItem(href:"#", title:"Stock Forecasting"),
-                new MenuItem(href:"#", title:"Reserved Stock"),
-                new MenuItem(href:"#", title:"Damaged Stock"),
-                new MenuItem(href:"#", title:"Consigned Stock"),
-            ]),
-            new MenuItem(title:"Items", childMenuItems:
-            [
-                new MenuItem(href:"#", title:"Item List"),
-                new MenuItem(href:"#", title:"Item Categories"),
-                new MenuItem(href:"#", title:"Units of Measure"),
-                new MenuItem(href:"#", title:"Suppliers"),
-                new MenuItem(href:"#", title:"Item Pricing"),
-                new MenuItem(href:"#", title:"Item Attributes"),
-                new MenuItem(href:"#", title:"Item Kits/Bundles"),
-                new MenuItem(href:"#", title:"Discontinued Items"),
-            ]),
-            new MenuItem(title:"Warehouses", childMenuItems:
-            [
-                new MenuItem(href:"#", title:"Warehouse List"),
-                new MenuItem(href:"#", title:"Transfers"),
-                new MenuItem(href:"#", title:"Stock Counts"),
-                new MenuItem(href:"#", title:"Warehouse Zones"),
-                new MenuItem(href:"#", title:"Cold Storage"),
-
-                new MenuItem(href:"#", title:"Third-Party Warehouses"),
-            ]),
-        ]),
+        new MenuItem(href:"/test/virtualization", title: "Virtualization", icon:"ri-bar-chart-horizontal-line"),               
     ];
 
     public static List<MenuItem> GetGeneralMenuItems() =>

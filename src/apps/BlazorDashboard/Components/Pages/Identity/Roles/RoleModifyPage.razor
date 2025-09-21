@@ -1,40 +1,82 @@
-﻿@page "/role/modify"
-@page "/role/modify/{Id}"
+﻿@page "/role/modify/{Id?}"
 
 @attribute [Authorize(Roles = "Customer")]
 
 @using MudBlazor
 @using Webport.ERP.Common.Domain.DataTransferObjects.System
 
-<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator />
-    <MudCard Elevation="1" Style="padding: 20px;">
-        <MudCardHeader>
-            <CardHeaderContent>
-                <MudText Typo="Typo.h6">Role Modify</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
+<MudBreadcrumbs Items="_items"></MudBreadcrumbs>
 
-        <MudCardContent>
-            <MudTextField @bind-Value="model.RoleName" For="@(() => model.RoleName)" Label="Role Name" />
-        </MudCardContent>
+@if (@isLoading)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+}
+else
+{
+    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <MudCard Elevation="1" Style="padding: 20px;">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Role Modify</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
 
-        <MudCardActions>            
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Success">Save</MudButton>
-            <MudButton OnClick="Cancel" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
-        </MudCardActions>
-    </MudCard>
-</EditForm>
+            <MudCardContent>
+                <MudTextField @bind-Value="model.RoleName"
+                              For="@(() => model.RoleName)"
+                              Label="Role Name"
+                              Required="true"
+                              Immediate="true" />
+            </MudCardContent>
+
+            <MudCardActions>
+                <MudButton ButtonType="ButtonType.Submit"
+                           Variant="Variant.Outlined"
+                           Color="Color.Success"
+                           Disabled="@isSubmitting">
+                    @((isSubmitting ? "Saving..." : "Save"))
+                </MudButton>
+
+                <MudButton OnClick="Cancel"
+                           Variant="Variant.Outlined"
+                           Color="Color.Error"
+                           Disabled="@isSubmitting">
+                    Cancel
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </EditForm>
+}
+
+
 
 @code {
     [Parameter] public string? Id { get; set; }
+
+    private readonly List<BreadcrumbItem> _items =
+    [
+        new("Home", href: "#"),
+            new("Link 1", href: "#"),
+            new("Link 2", href: null, disabled: true)
+    ];
+
     private RoleDto model = new();
+    private const string IndexPage = "/role/index";
+
+    private bool isSubmitting = false;
+    private bool isLoading = false;
 
     protected override async Task OnInitializedAsync()
     {
-        if (Id != null)
+        if (!string.IsNullOrWhiteSpace(Id))
         {
+            isLoading = true;
+
             model = await GetRole();
+
+            isLoading = false;
         }
     }
 
@@ -46,20 +88,31 @@
 
     private async Task OnValidSubmit(EditContext context)
     {
-        if (string.IsNullOrWhiteSpace(Id))
-        {
-            await _DataService.PostAsync("role", model);
-        }
-        else
-        {
-            await _DataService.PutAsync($"role", model);
-        }
+        isSubmitting = true;
 
-        _NavigationManager.NavigateTo("/role/index");
+        try
+        {    
+            if (string.IsNullOrWhiteSpace(Id))
+                await _DataService.PostAsync("role", model);
+            else
+                await _DataService.PutAsync("role", model);
+
+            _NavigationManager.NavigateTo(IndexPage);
+        }
+        catch (Exception ex)
+        {
+			Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
     }
 
-    void Cancel()
+    private void Cancel()
     {
-        _NavigationManager.NavigateTo("/role/index");
+        _NavigationManager.NavigateTo(IndexPage);
     }
+
+
 }

@@ -6,15 +6,27 @@
 
 <MudText Typo="Typo.h6">Role Index</MudText>
 
-<MudDataGrid Items="@Roles.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
+<MudDataGrid 
+        Items="@Roles.Take(50)" 
+        Filterable="true" 
+        SortMode="SortMode.Single"
+	    Groupable="false"
+        MultiSelection="false"
+        ColumnResizeMode="ResizeMode.Column" 
+        Dense="true"         
+        Hover="true" 
+        QuickFilter="_quickFilter"
+        Striped="true" 
+
+        RowStyle="height: 5px;">
     <ToolBarContent>
         <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
         <MudSpacer />
-        <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField Placeholder="Search" @bind-Value="_searchString" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <Columns>
         <PropertyColumn Property="_ => _.RoleId" Title="Role Id" />
-        <PropertyColumn Property="_ => _.RoleName" Title="Role Name" />               
+        <PropertyColumn Property="_ => _.RoleName" Title="Role Name"/>               
         <TemplateColumn>
             <CellTemplate>
                 <MudStack Row>
@@ -32,6 +44,19 @@
 
 @code {
     private List<RoleDto> Roles = new();
+
+    private string _searchString = null!;
+    private Func<RoleDto, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.RoleName!.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
 
     protected override async Task OnInitializedAsync()
     {

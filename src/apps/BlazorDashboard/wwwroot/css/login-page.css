@@ -1,36 +1,4 @@
-﻿:root {
-  /* Colors */
-  --body-color: #f8f8fa;
-  --primary-color: #695cfe;
-  --primary-color-light: #f6f5ff;
-  --text-color: #1b2124;
-
-  /* ===== Sizes ===== */
-  --header-height: 80px;
-  --footer-height: 40px;
-
-  /* Font */
-  --font-family: "Roboto", sans-serif;
-  --font-family-2: "Plus Jakarta Sans", sans-serif;
-  --font-family-3: "Segoe UI", Tahoma, sans-serif;
-
-  /* Transitions */
-  --tran-fast: all 0.2s ease;
-  --tran-medium: all 0.3s ease;
-  --tran-slow: all 0.5s ease;
-  --tran-slowest: all 3s ease;
-}
-
-/* Global Reset */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--font-family-2);
-}
-
-.login-wrapper {
+﻿.login-wrapper {
     height: 100vh;
     display: flex;
     flex-direction: column;

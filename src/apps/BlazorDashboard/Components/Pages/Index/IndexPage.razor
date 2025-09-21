@@ -24,7 +24,7 @@
 
             if (User.Identity?.IsAuthenticated == true && AuthenticationState is not null)
             {               
-                _NavigationManager.NavigateTo("/dashboard/home", forceLoad: false);
+                _NavigationManager.NavigateTo("/home", forceLoad: false);
             }
             else
             {
