@@ -3,7 +3,7 @@ name: Webport.ERP.Dashboard CI/CD
 on:
   push:
     branches:
-      - dev
+      - master
     paths:
       - 'src/apps/BlazorDashboard/**'    
   workflow_dispatch:
