@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - 'src/apps/BlazorDashboard/**'    
   workflow_dispatch:
 
 jobs:
