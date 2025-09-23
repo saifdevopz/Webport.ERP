@@ -14,10 +14,10 @@
             var allClaims = user.Claims.ToList();
 
             var roleClaims = allClaims
-            .Where(c => c.Type == ClaimTypes.Role || c.Type == "role")
-            .Select(c => c.Value)
-            .Distinct()
-            .ToList();
+                .Where(c => c.Type == ClaimTypes.Role || c.Type == "role")
+                .Select(c => c.Value)
+                .Distinct()
+                .ToList();
 
             var expClaim = allClaims.FirstOrDefault(c => c.Type == "exp");
             string? tokenExpiry = null;
@@ -29,7 +29,7 @@
         }
 
         <h1>Stupid System</h1>
-        <h2>Welcome, @name!</h2>
+        <span>Welcome, @name!</span>
         <p><strong>Authenticated:</strong> @isAuthenticated</p>
         <p><strong>Auth Type:</strong> @authType</p>
         @if (tokenExpiry != null)

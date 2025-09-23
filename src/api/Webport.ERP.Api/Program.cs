@@ -1,5 +1,5 @@
-using Scalar.AspNetCore;
 using System.Reflection;
+using Scalar.AspNetCore;
 using Webport.ERP.Api.Extensions;
 using Webport.ERP.Common.Application;
 using Webport.ERP.Common.Infrastructure;
@@ -56,7 +56,6 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
-
 
 var app = builder.Build();
 
