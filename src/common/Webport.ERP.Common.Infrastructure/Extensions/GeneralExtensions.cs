@@ -2,6 +2,7 @@
 using System.Text;
 
 namespace Webport.ERP.Common.Infrastructure.Extensions;
+
 public static class GeneralExtensions
 {
     public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

@@ -1,0 +1,107 @@
+﻿@page "/user/modify"
+@page "/user/modify/{Id}"
+@attribute [Authorize(Roles = "Admin")]
+
+<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudCard Elevation="1" Style="padding: 20px;">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">User Modify</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+
+        <MudCardContent>
+            <MudTextField @bind-Value="Model.FullName" For="@(() => Model.FullName)" Label="Full Name" />
+            <MudTextField @bind-Value="Model.Email" For="@(() => Model.Email)" Label="Email" />
+
+            <MudSelect @bind-Value="Model.TenantId"                
+                Label="Tenants"
+                Placeholder="Please Select"
+                Strict="true"
+                For="@(() => Model.TenantId)">
+                @if (Tenants != null)
+                {
+                    <MudSelectItem Value="-1">Select</MudSelectItem>
+                    @foreach (var tenant in Tenants!)
+                    {
+                        <MudSelectItem Value="tenant.TenantId">@tenant.TenantName</MudSelectItem>
+                    }
+                }
+            </MudSelect>
+
+            <MudSelect @bind-Value="Model.RoleId" Strict="true" Clearable="true">
+                @if (Roles != null)
+                {
+                    @foreach (var role in Roles!)
+                    {
+                        <MudSelectItem Value="role.RoleId">@role.RoleName</MudSelectItem>
+                    }
+                }
+            </MudSelect>
+
+        </MudCardContent>
+
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Success">Save</MudButton>
+            <MudButton OnClick="Cancel" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>
+
+@code {
+    [Parameter] public string? Id { get; set; }
+    private UserDto Model = new();
+    private IEnumerable<GetTenantDto>? Tenants;
+    private List<RoleDto>? Roles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTenants();
+        await GetRoles();
+
+        if (Id != null)
+        {
+            await GetUser();
+        }
+
+
+    }
+
+    public async Task GetRoles()
+    {
+        var response = await _DataService.GetAllAsync<RolesWrapper<RoleDto>>("role");
+        Roles = response.Data!.roles.ToList();
+    }
+
+    public async Task GetTenants()
+    {
+        var response = await _DataService.GetAllAsync<TenantsWrapper<GetTenantDto>>("tenant");
+        Tenants = response.Data!.Tenants.ToList();
+    }
+
+    private async Task GetUser()
+    {
+        var response = await _DataService.GetByIdAsync<UserWrapper<UserDto>>("user", Id!);
+        Model = response.Data!.User;
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        if (string.IsNullOrWhiteSpace(Id))
+        {
+            await _DataService.PostAsync("user", Model);
+        }
+        else
+        {
+            await _DataService.PutAsync($"user", Model);
+        }
+
+        _NavigationManager.NavigateTo("/user/index");
+    }
+
+    private void Cancel()
+    {
+        _NavigationManager.NavigateTo("/user/index");
+    }
+}

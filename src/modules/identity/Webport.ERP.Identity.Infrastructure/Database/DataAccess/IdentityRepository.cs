@@ -4,6 +4,7 @@ using Webport.ERP.Common.Application.Database;
 using Webport.ERP.Identity.Application.Interfaces;
 
 namespace Webport.ERP.Identity.Infrastructure.Database.DataAccess;
+
 public class IdentityRepository<TEntity> : IIdentityRepository<TEntity>
     where TEntity : class
 {

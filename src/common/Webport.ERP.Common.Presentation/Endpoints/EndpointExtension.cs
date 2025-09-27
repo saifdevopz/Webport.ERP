@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Reflection;
 
 namespace Webport.ERP.Common.Presentation.Endpoints;
+
 public static class EndpointExtensions
 {
     public static IServiceCollection AddEndpoints(

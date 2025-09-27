@@ -37,6 +37,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Authentication
 builder.Services.AddHttpContextAccessor();
+//builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 var app = builder.Build();

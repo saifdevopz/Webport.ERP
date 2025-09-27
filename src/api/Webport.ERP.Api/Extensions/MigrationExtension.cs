@@ -3,6 +3,7 @@ using Webport.ERP.Identity.Infrastructure.Database;
 using Webport.ERP.Identity.Infrastructure.Database.DataAccess;
 
 namespace Webport.ERP.Api.Extensions;
+
 internal static class MigrationExtensions
 {
     public static async Task ApplyAllMigrations(this IApplicationBuilder app)

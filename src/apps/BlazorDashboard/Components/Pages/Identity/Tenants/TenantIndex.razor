@@ -1,0 +1,45 @@
+﻿@page "/tenant/index"
+@attribute [Authorize(Roles = "Admin")]
+
+<MudText Typo="Typo.h6">Tenant Index</MudText>
+
+<MudDataGrid Items="@Tenants.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true">
+    <ToolBarContent>
+        <MudIconButton Href="@($"tenant/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
+        
+        <MudSpacer />
+        <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="_ => _.TenantId" Title="Tenant Id" />
+        <PropertyColumn Property="_ => _.TenantName" Title="Tenant Name" />
+        <PropertyColumn Property="_ => _.DatabaseName" Title="Database Name" />
+        <PropertyColumn Property="_ => _.LicenceExpiryDate" Title="Licence Expiry Date" />
+    @*     <PropertyColumn Property="_ => _.ConnectionString" Title="Connection String" /> *@
+        <TemplateColumn CellClass="">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudIconButton Href="@($"tenant/modify/{context.Item.TenantId}")" Icon="@Icons.Material.Filled.Edit" aria-label="delete" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="GetTenantDto" />
+    </PagerContent>
+</MudDataGrid>
+
+@code {
+    private List<GetTenantDto> Tenants = new List<GetTenantDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await _DataService.GetAllAsync<TenantsWrapper<GetTenantDto>>("tenant");
+
+        if (result.IsSuccess)
+        {
+            Tenants = result.Data!.Tenants.ToList();
+        }
+    }
+}

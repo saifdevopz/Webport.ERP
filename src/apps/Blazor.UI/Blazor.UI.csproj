@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Title>Blazor.UI</Title>
+    <Authors>Webport</Authors>
+    <Description>Custom Blazor Components</Description>
+    <Copyright>@2025, Webport</Copyright>
+    <PackageReleaseNotes>Amazing and fast components.</PackageReleaseNotes>
+    <PackageId>Webport.$(AssemblyName)</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<VersionPrefix>1.0.2</VersionPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="README.md" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
+		<PackageReference Include="Syncfusion.Blazor.DataForm" Version="29.1.40" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="29.1.40" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="29.1.40" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="License.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

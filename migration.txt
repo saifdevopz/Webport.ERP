@@ -32,3 +32,42 @@ Module.Presentation => Common.Presentation, Module.Application
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Creating Endpoint (Server)
+
+1. Create Model/DTO
+2. Add Service Interface.
+3. Implement Service Interface.
+4. Build Service Class.
+5. Build Contoller With Service.
+6. Test Controller Endpoint With Postman.
+
+Using Endpoint (Client)
+
+1. Implement Service Interface.
+2. Build Service Class.
+3. Test Service In Blazor Pages.
+
+
+//Domain
+
+This is the heart of your application, containing the domain logic.
+
+Entities: Core domain objects with identity.
+ValueObjects: Objects that describe aspects of the domain with no identity.
+Aggregates: Group of related entities and value objects treated as a single unit.
+Repositories: Interfaces for accessing domain objects.
+Specifications: Encapsulate complex query logic or business rules.
+DomainEvents: Events that are raised when something noteworthy happens in the domain.
+Factories: Classes that handle the creation of complex domain objects.
+Services: Domain services that encapsulate domain logic not naturally belonging to an entity or value object.
+Domain Exceptions: Rrepresents violations of business rules or illegal operations within the domain model.
+
+
+Errors
+Constants 
+Enums
+Abstractions

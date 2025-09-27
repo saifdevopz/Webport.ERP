@@ -40,7 +40,7 @@ internal static class SidebarData
     [
         new MenuItem(href:"/home", title: "Home", icon:"ri-add-box-fill"),
         new MenuItem(href:"/counter", title: "Counter", icon:"ri-add-box-fill"),
-        new MenuItem(href:"/test/virtualization", title: "Virtualization", icon:"ri-bar-chart-horizontal-line"),               
+        new MenuItem(href:"/test/virtualization", title: "Virtualization", icon:"ri-bar-chart-horizontal-line"),
     ];
 
     public static List<MenuItem> GetGeneralMenuItems() =>

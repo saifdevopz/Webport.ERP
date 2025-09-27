@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -6,24 +7,58 @@ namespace BlazorDashboard.Common.Authentication;
 
 public class CustomAuthenticationStateProvider(IHttpContextAccessor httpContextAccessor) : AuthenticationStateProvider
 {
+    private readonly ClaimsPrincipal _anonymous = new(new ClaimsIdentity());
+
     public override Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        if (httpContextAccessor.HttpContext!.Request.Cookies.ContainsKey(BlazorConstants.AuthCookieName))
-        {
-            var token = httpContextAccessor.HttpContext.Request.Cookies[BlazorConstants.AuthCookieName];
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
-            var claims = new List<Claim>();
-            foreach (var claim in jsonToken!.Claims)
-            {
-                claims.Add(new Claim(claim.Type, claim.Value));
-            }
+        var context = httpContextAccessor.HttpContext;
 
-            var claimsIdentity = new ClaimsIdentity(claims, "jwt");
-            var user = new ClaimsPrincipal(claimsIdentity);
-            return Task.FromResult(new AuthenticationState(user));
+        if (context == null || !context.Request.Cookies.TryGetValue(BlazorConstants.AuthCookieName, out var token))
+        {
+            return Task.FromResult(new AuthenticationState(_anonymous));
         }
 
-        return Task.FromResult(new AuthenticationState(new ClaimsPrincipal()));
+        try
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Expiry check
+            if (jwtToken.ValidTo < DateTime.UtcNow)
+            {
+                return Task.FromResult(new AuthenticationState(_anonymous));
+            }
+
+            // Build ClaimsPrincipal
+            var identity = new ClaimsIdentity(jwtToken.Claims, "jwt");
+            var user = new ClaimsPrincipal(identity);
+
+            return Task.FromResult(new AuthenticationState(user));
+        }
+        catch (ArgumentException)
+        {
+            // Malformed token or missing claims
+            return Task.FromResult(new AuthenticationState(_anonymous));
+        }
+        catch (SecurityTokenException)
+        {
+            // Token validation errors
+            return Task.FromResult(new AuthenticationState(_anonymous));
+        }
+    }
+
+    public void MarkUserAsAuthenticated(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        var identity = new ClaimsIdentity(jwtToken.Claims, "jwt");
+        var user = new ClaimsPrincipal(identity);
+
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
+    }
+
+    public void MarkUserAsLoggedOut()
+    {
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(_anonymous)));
     }
 }

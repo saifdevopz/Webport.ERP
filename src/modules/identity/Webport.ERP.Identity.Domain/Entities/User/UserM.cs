@@ -4,8 +4,10 @@ using Webport.ERP.Identity.Domain.Entities.Role;
 using Webport.ERP.Identity.Domain.Entities.Tenant;
 
 namespace Webport.ERP.Identity.Domain.Entities.User;
+
 public sealed class UserM : AggregateRoot
 {
+
     public int UserId { get; set; }
     public int TenantId { get; set; }
     public int RoleId { get; set; }

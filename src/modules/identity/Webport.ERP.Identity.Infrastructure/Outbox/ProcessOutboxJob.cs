@@ -12,6 +12,7 @@ using Webport.ERP.Common.Domain.Abstractions;
 using Webport.ERP.Common.Infrastructure.Clock;
 using Webport.ERP.Common.Infrastructure.Outbox;
 using Webport.ERP.Common.Infrastructure.Serialization;
+using Webport.ERP.Identity.Domain;
 using Webport.ERP.Identity.Infrastructure.Common;
 
 namespace Webport.ERP.Identity.Infrastructure.Outbox;
@@ -51,7 +52,7 @@ internal sealed class ProcessOutboxJob(
                 IEnumerable<IDomainEventDispatcher> handlers = DomainEventHandlersFactory.GetHandlers(
                         domainEvent.GetType(),
                         scope.ServiceProvider,
-                        Application.AssemblyReference.Assembly);
+                        AssemblyReference.Assembly);
 
                 foreach (IDomainEventDispatcher domainEventHandler in handlers)
                 {

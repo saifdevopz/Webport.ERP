@@ -124,7 +124,7 @@
 
 /* ============= BUTTONS =============== */
 .menu-toggle {
-    display: none;
+    visibility: hidden;
     cursor: pointer;    
     padding: 0.75rem; 
 }
@@ -144,11 +144,11 @@
 
 @media (max-width: 1024px) {
     .toggle-arrow {
-        display: none;
+        visibility: hidden;
     }
 
     .menu-toggle {
-        display: block;
+        visibility: visible;
     }
     .sidebar {
         left: -250px;

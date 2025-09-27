@@ -1,0 +1,46 @@
+﻿@page "/user/index"
+@attribute [Authorize(Roles = "Admin")]
+
+<MudText Typo="Typo.h6">User Index</MudText>
+
+<MudDataGrid Items="@Users.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true">
+    <ToolBarContent>
+        <MudIconButton Href="@($"user/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
+
+        <MudSpacer />
+        <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="_ => _.UserId" HeaderStyle="width: 15em;" Title="User Id" />
+        <PropertyColumn Property="_ => _.FullName" Title="User Name" />
+        <PropertyColumn Property="_ => _.TenantId" Title="Tenant Name" />
+        <TemplateColumn CellClass="">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudIconButton Href="@($"user/modify/{context.Item.UserId}")" Icon="@Icons.Material.Filled.Edit" Color="Color.Success" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="UserDto" />
+    </PagerContent>
+</MudDataGrid>
+
+
+@code {    
+    private List<UserDto> Users = new List<UserDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _DataService.GetAllAsync<UsersWrapper<UserDto>>("user");
+
+        if (response!.IsSuccess)
+        {
+            Users= response.Data!.Users.ToList();
+        }
+
+    }
+}
+

@@ -7,6 +7,7 @@ using Webport.ERP.Common.Domain.Results;
 
 
 namespace BlazorDashboard.Common.Services.Implementations;
+
 public class TokenService(BaseHttpClient httpClient) : ITokenService
 {
     public const string baseUrl = "/token/accesstoken";

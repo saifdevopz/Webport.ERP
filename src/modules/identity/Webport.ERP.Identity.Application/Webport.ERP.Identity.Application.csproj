@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\..\..\common\Webport.ERP.Common.Application\Webport.ERP.Common.Application.csproj" />
     <ProjectReference Include="..\Webport.ERP.Identity.Domain\Webport.ERP.Identity.Domain.csproj" />

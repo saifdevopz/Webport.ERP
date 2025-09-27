@@ -1,0 +1,13 @@
+﻿@page "/logout"
+@using BlazorDashboard.Common
+@using BlazorDashboard.Common.Authentication
+@attribute [AllowAnonymous]
+
+@code {
+    protected override void OnInitialized()
+    {
+        _HttpContextAccessor.HttpContext!.Response.Cookies.Delete(BlazorConstants.AuthCookieName);
+
+        _NavigationManager.NavigateTo("/");
+    }
+}

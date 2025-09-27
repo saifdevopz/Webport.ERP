@@ -1,0 +1,12 @@
+Creating A Feature
+================
+
+- Create Entity In Domain Module
+
+- Add Entity To DbContext & Add Tenant Query Filter To Entity
+
+- Create Entity Configuration In Configurations Folder
+
+- Create CRUD { Commands & Queries } In Application Module
+
+- Create Endpoints In Presentation Module

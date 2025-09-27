@@ -1,12 +1,11 @@
-using System.Reflection;
 using Scalar.AspNetCore;
+using System.Reflection;
 using Webport.ERP.Api.Extensions;
 using Webport.ERP.Common.Application;
 using Webport.ERP.Common.Infrastructure;
 using Webport.ERP.Common.Infrastructure.Middlewares;
 using Webport.ERP.Common.Presentation.Endpoints;
 using Webport.ERP.Identity.Infrastructure;
-using Webport.ERP.Inventory.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +32,8 @@ builder.Services.AddProblemDetails();
 // Application Module Assemblies
 Assembly[] moduleApplicationAssemblies =
 [
-    Webport.ERP.Identity.Application.AssemblyReference.Assembly,
-    Webport.ERP.Inventory.Application.AssemblyReference.Assembly,
+    Webport.ERP.Identity.Domain.AssemblyReference.Assembly,
+    //Webport.ERP.Inventory.Application.AssemblyReference.Assembly,
 ];
 
 // Common Application Module
@@ -44,7 +43,7 @@ builder.Services.AddCommonApplication(moduleApplicationAssemblies);
 builder.Services.AddCommonInfrastructure(builder.Configuration, "Webport.Name");
 
 builder.Services.AddIdentityModule(builder.Configuration, identityDbString);
-builder.Services.AddInventoryModule(builder.Configuration, tenantDbString);
+//builder.Services.AddInventoryModule(builder.Configuration, tenantDbString);
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -69,7 +68,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
         _.Servers = [];
         _.Theme = ScalarTheme.Kepler;
     });
-    await app.ApplyAllMigrations();
+     await app.ApplyAllMigrations();
 }
 
 app.UseExceptionHandler();

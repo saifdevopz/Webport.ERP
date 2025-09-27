@@ -11,6 +11,7 @@ using Webport.ERP.Inventory.Infrastructure.Outbox;
 using Webport.ERP.Inventory.Presentation;
 
 namespace Webport.ERP.Inventory.Infrastructure;
+
 public static class InventoryModule
 {
     public static IServiceCollection AddInventoryModule(

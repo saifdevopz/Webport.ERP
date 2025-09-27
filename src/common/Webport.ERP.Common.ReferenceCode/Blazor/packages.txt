@@ -1,0 +1,10 @@
+Microsoft.AspNetCore.Components.Authorization
+
+-----------------------------------------------------------------------------
+Blazored.LocalStorage
+
+// Local Storage
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<LocalStorageService>();
+
+-----------------------------------------------------------------------------

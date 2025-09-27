@@ -7,7 +7,7 @@ using Webport.ERP.Common.Infrastructure.Database;
 
 namespace Webport.ERP.Common.Infrastructure.Interceptors;
 
-public class AuditableEntityInterceptor : SaveChangesInterceptor
+public class AuditableEntityInterceptor() : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {

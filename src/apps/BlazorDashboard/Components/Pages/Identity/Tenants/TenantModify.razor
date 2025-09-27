@@ -1,0 +1,67 @@
+﻿@page "/tenant/modify"
+@page "/tenant/modify/{Id}"
+@attribute [Authorize(Roles = "Admin")]
+
+<MudCard Elevation="0" Style="margin-left:20px; padding:20px;">
+    <MudTextField @bind-Value="TenantObj.TenantName"
+    T="string"
+    Label="Tenant Name"
+    Required="true"
+    RequiredError="Tenant name is required!" />
+
+    <MudTextField @bind-Value="TenantObj.DatabaseName"
+    T="string"
+    Label="Database Name"
+    Required="true"
+    RequiredError="Database name is required!" />
+
+    <MudTextField @bind-Value="TenantObj.ConnectionString"
+    T="string"
+    Label="Connection String"
+    Required="true"
+    RequiredError="Connection string is required!" />
+
+  @*   <MudDatePicker @bind-Date="TenantObj.LicenceExpiryDate" Label="Licence Expiry Date" /> *@
+
+    <MudButton OnClick="Save" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+    <MudButton OnClick="Cancel" Variant="Variant.Filled" Color="Color.Error">Cancel</MudButton>
+</MudCard>
+
+@code {
+    [Parameter] public string? Id { get; set; }
+    private GetTenantDto TenantObj = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+            TenantObj = await GetTenant();
+        }
+    }
+
+    private async Task<GetTenantDto> GetTenant()
+    {
+        var response = await _DataService.GetByIdAsync<TenantWrapper<GetTenantDto>>("tenant", Id!);
+        return response.Data!.Tenant;
+    }
+
+    private async Task Save()
+    {
+
+        if (string.IsNullOrWhiteSpace(Id))
+        {
+            await _DataService.PostAsync("tenant", TenantObj);
+        }
+        else
+        {
+            await _DataService.PutAsync($"tenant", TenantObj);
+        }
+
+        _NavigationManager.NavigateTo("/tenant/index");
+    }
+
+    void Cancel()
+    {
+        _NavigationManager.NavigateTo("/tenant/index");
+    }
+}
