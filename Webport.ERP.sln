@@ -37,8 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "information", "information", "{B624A79C-2556-4209-A44E-4EE0E348AA26}"
 	ProjectSection(SolutionItems) = preProject
-		migration.txt = migration.txt
 		Guide.txt = Guide.txt
+		features.txt = features.txt
+		migration.txt = migration.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "inventory", "inventory", "{4C02B2D4-4CF0-47BA-8B2E-156081AA3E13}"

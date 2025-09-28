@@ -6,10 +6,11 @@ using Webport.ERP.Common.Infrastructure;
 using Webport.ERP.Common.Infrastructure.Middlewares;
 using Webport.ERP.Common.Presentation.Endpoints;
 using Webport.ERP.Identity.Infrastructure;
+using Webport.ERP.Inventory.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Connection Strings
+// Database Connection Strings
 string? identityDbString = builder.Configuration["PostgreSQL:IdentityConnection"];
 ArgumentException.ThrowIfNullOrWhiteSpace(identityDbString);
 
@@ -32,8 +33,8 @@ builder.Services.AddProblemDetails();
 // Application Module Assemblies
 Assembly[] moduleApplicationAssemblies =
 [
-    Webport.ERP.Identity.Domain.AssemblyReference.Assembly,
-    //Webport.ERP.Inventory.Application.AssemblyReference.Assembly,
+    Webport.ERP.Identity.Application.AssemblyReference.Assembly,
+    Webport.ERP.Inventory.Application.AssemblyReference.Assembly,
 ];
 
 // Common Application Module
@@ -42,8 +43,9 @@ builder.Services.AddCommonApplication(moduleApplicationAssemblies);
 // Common Infrastructure Module
 builder.Services.AddCommonInfrastructure(builder.Configuration, "Webport.Name");
 
+// Identity and Inventory Infrastructure Modules
 builder.Services.AddIdentityModule(builder.Configuration, identityDbString);
-//builder.Services.AddInventoryModule(builder.Configuration, tenantDbString);
+builder.Services.AddInventoryModule(builder.Configuration, tenantDbString);
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -68,7 +70,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
         _.Servers = [];
         _.Theme = ScalarTheme.Kepler;
     });
-     await app.ApplyAllMigrations();
+
+    await app.ApplyAllMigrations();
 }
 
 app.UseExceptionHandler();

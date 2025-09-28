@@ -30,7 +30,7 @@ public static class ClaimsPrincipalExtensions
 
     public static int GetUserId(this ClaimsPrincipal? principal)
     {
-        string? userId = principal?.FindFirst(CustomClaims.Sub)?.Value;
+        string? userId = principal?.FindFirst(CustomClaims.UserId)?.Value;
 
         return int.TryParse(userId, out int parsedUserId) ?
         parsedUserId :

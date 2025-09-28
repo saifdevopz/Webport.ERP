@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Quartz;
 using Webport.ERP.Common.Application.Database;
 using Webport.ERP.Common.Infrastructure.Authentication;
+using Webport.ERP.Common.Infrastructure.Authorization;
 using Webport.ERP.Common.Infrastructure.Clock;
 using Webport.ERP.Common.Infrastructure.Database;
 using Webport.ERP.Common.Infrastructure.Interceptors;
@@ -22,6 +23,7 @@ public static class InfrastructureConfiguration
         services.ConfigureMailing();
 
         services.AddAuthenticationInternal();
+        services.AddAuthorizationInternal();
 
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.TryAddSingleton<InsertOutboxMessagesInterceptor>();

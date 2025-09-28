@@ -24,9 +24,12 @@ public class DataSeeder(IdentityDbContext context)
 
         TenantM[] tenants =
         [
-            TenantM.Create("Webport"),
+            TenantM.Create("SuperAdmin"),
             TenantM.Create("Customer1"),
             TenantM.Create("Customer2"),
+            TenantM.Create("Customer3"),
+            TenantM.Create("Customer4"),
+            TenantM.Create("Customer5"),
         ];
 
         await _context.Tenants.AddRangeAsync(tenants);
@@ -42,7 +45,7 @@ public class DataSeeder(IdentityDbContext context)
 
         RoleM[] roles =
         [
-            RoleM.Create("Admin"),
+            RoleM.Create("Admin"),             
             RoleM.Create("Customer")
         ];
 
@@ -60,11 +63,31 @@ public class DataSeeder(IdentityDbContext context)
         UserM[] users =
         [
             UserM.Create(1, 1, "Saif Khan", "admin@gmail.com", "12345678"),
-            UserM.Create(2, 2, "Itachi Uchiha", "customer1@gmail.com", "12345678"),
-            UserM.Create(3, 2, "Naruto Uzumaki", "customer2@gmail.com", "12345678"),
+            UserM.Create(2, 2, "Checkers", "customer1@gmail.com", "12345678"),
+            UserM.Create(3, 2, "Spar", "customer2@gmail.com", "12345678"),
+            UserM.Create(4, 2, "Checkstar", "customer3@gmail.com", "12345678"),
+            UserM.Create(5, 2, "Checkmart", "customer4@gmail.com", "12345678"),
+            UserM.Create(5, 2, "Mhexpress", "customer5@gmail.com", "12345678"),
         ];
 
         await _context.Users.AddRangeAsync(users);
+        await _context.SaveChangesAsync();
+    }
+
+    private async Task SeedPermissionsAsync()
+    {
+        if (await _context.Permissions.AnyAsync())
+        {
+            return;
+        }
+
+        PermissionM[] permissions =
+        [
+            PermissionM.Create("identity:modify"),            
+            PermissionM.Create("inventory:modify"),                       
+        ];
+
+        await _context.Permissions.AddRangeAsync(permissions);
         await _context.SaveChangesAsync();
     }
 
@@ -78,29 +101,11 @@ public class DataSeeder(IdentityDbContext context)
         RolePermissionM[] rolePermissions =
         [
             new RolePermissionM { RoleId = 1, PermissionId = 1 },
-            new RolePermissionM { RoleId = 2, PermissionId = 2 },
-            new RolePermissionM { RoleId = 2, PermissionId = 3 }
+            new RolePermissionM { RoleId = 1, PermissionId = 2 },
+            new RolePermissionM { RoleId = 2, PermissionId = 2 }            
         ];
 
         await _context.RolePermissions.AddRangeAsync(rolePermissions);
-        await _context.SaveChangesAsync();
-    }
-
-    private async Task SeedPermissionsAsync()
-    {
-        if (await _context.Permissions.AnyAsync())
-        {
-            return;
-        }
-
-        PermissionM[] permissions =
-        [
-            PermissionM.Create("global:access"),
-            PermissionM.Create("parent:modify"),
-            PermissionM.Create("parent:read"),
-        ];
-
-        await _context.Permissions.AddRangeAsync(permissions);
         await _context.SaveChangesAsync();
     }
 }

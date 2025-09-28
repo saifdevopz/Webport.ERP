@@ -14,10 +14,10 @@ public class GetPermissionsByUserIdQueryHandler(IDbConnectionFactory dbConnectio
 		    SELECT DISTINCT 
 				   u.user_id as "{nameof(UserPermission.UserId)}",
 				   p.permission_code as "{nameof(UserPermission.Permission)}" 
-		    FROM webport.users u
-		    LEFT JOIN webport.role_permissions rp 
+		    FROM identity.users u
+		    LEFT JOIN identity.role_permissions rp 
 			    ON rp.role_id = u.role_id
-		    LEFT JOIN webport.permissions p 
+		    LEFT JOIN identity.permissions p 
 			    ON p.permission_id = rp.permission_id
 		    WHERE u.user_id = @UserId
 		""";

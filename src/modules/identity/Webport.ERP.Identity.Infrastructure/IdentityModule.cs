@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Webport.ERP.Common.Application.Authorization;
 using Webport.ERP.Common.Application.Messaging;
 using Webport.ERP.Common.Presentation.Endpoints;
 using Webport.ERP.Identity.Application.Interfaces;
@@ -26,7 +27,7 @@ public static class IdentityModule
 
         services.AddDomainEventHandlers();
 
-        services.AddInfrastructure(/*configuration, */identityDatabaseString);
+        services.AddInfrastructure(configuration, identityDatabaseString);
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 
@@ -35,13 +36,15 @@ public static class IdentityModule
 
     private static void AddInfrastructure(
         this IServiceCollection services,
-        //IConfiguration configuration,
+        IConfiguration configuration,
         string systemDatabaseString)
     {
-        //services.AddScoped<DataSeeder>();
+        services.AddScoped<DataSeeder>();
 
         services.AddScoped(typeof(IIdentityRepository<>), typeof(IdentityRepository<>));
+
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IPermissionService, PermissionService>();
 
         services.AddDbContext<IdentityDbContext>((sp, options) =>
         {
@@ -57,8 +60,8 @@ public static class IdentityModule
             .UseSnakeCaseNamingConvention();
         });
 
-        //services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
-        //services.ConfigureOptions<ConfigureProcessOutboxJob>();
+        services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
+        services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
     private static void AddDomainEventHandlers(this IServiceCollection services)
     {

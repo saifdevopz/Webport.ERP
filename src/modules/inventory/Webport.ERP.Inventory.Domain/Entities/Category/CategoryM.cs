@@ -2,9 +2,6 @@
 
 public sealed class CategoryM : AggregateRoot, IMustHaveTenant
 {
-    private CategoryM()
-    {
-    }
 
     public int TenantId { get; set; }
     public int CategoryId { get; set; }

@@ -16,7 +16,7 @@ internal sealed class IdempotentDomainEventHandler<TDomainEvent>(
 {
     public override async Task Handle(TDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        await using DbConnection connection = await _dbConnectionFactory.OpenPostgreSQLConnection();
+        await using DbConnection connection = await _dbConnectionFactory.OpenIdentityConnection();
 
         OutboxMessageConsumer outboxMessageConsumer = new(domainEvent.Id, decorated.GetType().Name);
 

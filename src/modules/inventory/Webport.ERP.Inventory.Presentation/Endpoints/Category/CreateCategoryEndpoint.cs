@@ -15,6 +15,7 @@ internal sealed class CreateCategoryEndpoint : IEndpoint
 
             return response;
         })
-        .WithTags(Tags.Category);
+        .WithTags(Tags.Category)
+        .RequireAuthorization();
     }
 }

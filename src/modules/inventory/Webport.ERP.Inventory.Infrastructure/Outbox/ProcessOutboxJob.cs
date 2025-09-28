@@ -24,7 +24,7 @@ internal sealed class ProcessOutboxJob(
     {
         logger.LogInformation("{Module} - Beginning to process outbox messages", ModuleName);
 
-        await using DbConnection connection = await _dbConnectionFactory.OpenPostgreSQLConnection();
+        await using DbConnection connection = await _dbConnectionFactory.OpenTenantConnection();
         await using DbTransaction transaction = await connection.BeginTransactionAsync();
 
         // Get unprocessed outbox messages from database.

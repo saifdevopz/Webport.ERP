@@ -11,7 +11,8 @@ public sealed class TenantProvider(IHttpContextAccessor httpContextAccessor)
         {
             var user = httpContextAccessor.HttpContext?.User;
 
-            return user.GetTenantId();
+            // Return default tenant ID when HttpContext or User is unavailable (e.g. EF CLI)
+            return user == null ? 1 : user.GetTenantId();
         }
     }
 

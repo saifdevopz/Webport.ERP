@@ -15,7 +15,6 @@ internal sealed class DeleteRoleEndpoint : IEndpoint
 
             return response;
         })
-        .WithTags(Tags.Role)
-        .RequireAuthorization();
+        .WithTags(Tags.Role);
     }
 }
