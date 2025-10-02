@@ -1,0 +1,19 @@
+- Scan Threw Entire Solution And Document What Is Needed 
+
+Current Progress
+
+API - Done
+
+Common Domain
+
+- DataTransferObjects (Used For Client Side Data Transfer) Suggestion [Create A Shared Library Just For Server & Client Communication]
+
+
+
+- Centralised DateTime
+
+- Best Way To Regsiter Interceptors
+
+- Logging
+- Tracing
+- Monitoring

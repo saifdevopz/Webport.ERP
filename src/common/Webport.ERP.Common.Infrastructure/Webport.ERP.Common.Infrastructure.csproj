@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Middlewares\TokenCheckerMiddleware.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
     <PackageReference Include="MailKit" Version="4.13.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />    
@@ -23,10 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Webport.ERP.Common.Application\Webport.ERP.Common.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
   </ItemGroup>
 
 </Project>

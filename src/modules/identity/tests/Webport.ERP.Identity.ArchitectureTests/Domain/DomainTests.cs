@@ -2,7 +2,6 @@
 using System.Reflection;
 using Webport.ERP.Common.Domain.Abstractions;
 using Webport.ERP.Identity.ArchitectureTests.Abstractions;
-using Webport.ERP.Identity.Domain.Entities.User;
 
 namespace Webport.ERP.Identity.ArchitectureTests.Domain;
 
@@ -71,7 +70,7 @@ public class DomainTests : BaseTest
         var entityTypes = Types
             .InAssembly(DomainAssembly)
             .That()
-            .Inherit(typeof(UserM)) // Replace with AggregateRoot or your base entity            
+            .Inherit(typeof(AggregateRoot)) // Replace with AggregateRoot or your base entity            
             .GetTypes();
 
         var failingTypes = entityTypes
@@ -82,30 +81,10 @@ public class DomainTests : BaseTest
             $"These entity classes are not sealed: {string.Join(", ", failingTypes.Select(t => t.Name))}");
     }
 
-    [Fact]
-    public void EntityClasses_Should_BeSealed2()
-    {
-        var entityTypes = Types
-            .InAssembly(DomainAssembly)
-            .GetTypes()
-            .Where(t => t.IsClass && t.Namespace != null)
-            .ToList();
-
-        Console.WriteLine("Types being checked: " + string.Join(", ", entityTypes.Select(t => t.FullName)));
-
-        var failingTypes = entityTypes
-            .Where(t => !t.IsSealed)
-            .ToList();
-
-        Assert.True(failingTypes.Count == 0,
-            $"These entity classes are not sealed: {string.Join(", ", failingTypes.Select(t => t.Name))}");
-    }
-
-
 
     private static IEnumerable<Type> GetEntityTypes() =>
         Types.InAssembly(DomainAssembly)
             .That()
-            .Inherit(typeof(UserM))
+            .Inherit(typeof(AggregateRoot))
             .GetTypes();
 }

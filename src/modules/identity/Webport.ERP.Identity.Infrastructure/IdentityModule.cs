@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Webport.ERP.Common.Application.Authorization;
 using Webport.ERP.Common.Application.Messaging;
+using Webport.ERP.Common.Infrastructure.Interceptors;
 using Webport.ERP.Common.Presentation.Endpoints;
 using Webport.ERP.Identity.Application.Interfaces;
-using Webport.ERP.Identity.Domain;
 using Webport.ERP.Identity.Infrastructure.Common;
 using Webport.ERP.Identity.Infrastructure.Database;
 using Webport.ERP.Identity.Infrastructure.Database.DataAccess;
@@ -57,7 +57,10 @@ public static class IdentityModule
 
                 npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, IdentityConstants.Schema);
             })
-            .UseSnakeCaseNamingConvention();
+            .UseSnakeCaseNamingConvention()
+            .AddInterceptors(
+                sp.GetRequiredService<AuditableEntityInterceptor>(),
+                sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
         });
 
         services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));

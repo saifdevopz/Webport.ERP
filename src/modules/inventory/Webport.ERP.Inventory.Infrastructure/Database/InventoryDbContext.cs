@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using Webport.ERP.Common.Infrastructure.Exceptions;
 using Webport.ERP.Inventory.Domain.Entities.Category;
 using Webport.ERP.Inventory.Domain.Entities.Item;
 using Webport.ERP.Inventory.Infrastructure.Common;

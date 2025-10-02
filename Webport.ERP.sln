@@ -37,9 +37,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "information", "information", "{B624A79C-2556-4209-A44E-4EE0E348AA26}"
 	ProjectSection(SolutionItems) = preProject
-		Guide.txt = Guide.txt
 		features.txt = features.txt
+		Guide.txt = Guide.txt
 		migration.txt = migration.txt
+		tasks.txt = tasks.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "inventory", "inventory", "{4C02B2D4-4CF0-47BA-8B2E-156081AA3E13}"
@@ -62,7 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webport.ERP.Common.Referenc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.UI", "src\apps\Blazor.UI\Blazor.UI.csproj", "{02F156E4-2CF4-DB5E-64DF-16D402487219}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{695A3980-A0DA-453B-8EF7-8E7E2D6FD518}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{695A3980-A0DA-453B-8EF7-8E7E2D6FD518}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webport.ERP.ArchitectureTests", "src\test\Webport.ERP.ArchitectureTests\Webport.ERP.ArchitectureTests.csproj", "{C4DDAE61-02B2-4FE2-903D-0D2E85EE6D9F}"
 EndProject

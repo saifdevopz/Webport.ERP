@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Webport.ERP.Common.Infrastructure.Interceptors;
 using Webport.ERP.Common.Infrastructure.Outbox;
 using Webport.ERP.Identity.Infrastructure.Common;
 
@@ -31,7 +30,7 @@ public sealed class IdentityDbContext(DbContextOptions<IdentityDbContext> option
         ArgumentNullException.ThrowIfNull(optionsBuilder);
 
         // Interceptors
-        optionsBuilder.AddInterceptors(new AuditableEntityInterceptor());
-        optionsBuilder.AddInterceptors(new InsertOutboxMessagesInterceptor());
+        //optionsBuilder.AddInterceptors(new AuditableEntityInterceptor());
+        //optionsBuilder.AddInterceptors(new InsertOutboxMessagesInterceptor());
     }
 }
