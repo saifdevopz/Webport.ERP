@@ -9,18 +9,22 @@ services:
     environment: 
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080   
+
+      - OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-gateway-prod-ap-southeast-1.grafana.net/otlp
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf 
+      - OTEL_EXPORTER_OTLP_HEADERS=Authorization=Authorization=Basic MTM4OTkzNDpnbGNfZXlKdklqb2lNVFUwTmpVM09DSXNJbTRpT2lKM1pXSndiM0owTFdWeWNDMTBiMnRsYmpJaUxDSnJJam9pTVV3MlNXWjVSbWxXYWpOWk1USTRTRmN3YnpnM00xbHBJaXdpYlNJNmV5SnlJam9pY0hKdlpDMWhjQzF6YjNWMGFHVmhjM1F0TVNKOWZRPT0=
     ports:
-      - "5000:8080"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.webport-erp-api.loadbalancer.server.port=8080"
-      - "traefik.http.routers.webport-erp-api.entrypoints=https"
-      - "traefik.http.routers.webport-erp-api.rule=Host(`tenantapi.webport.co.za`)"
-      - "traefik.http.routers.webport-erp-api.tls=true"
-      - "traefik.http.routers.webport-erp-api.tls.certresolver=cloudflare"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-    networks:
-      - proxy
+      - "5056:8080"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.services.webport-erp-api.loadbalancer.server.port=8080"
+    #   - "traefik.http.routers.webport-erp-api.entrypoints=https"
+    #   - "traefik.http.routers.webport-erp-api.rule=Host(`tenantapi.webport.co.za`)"
+    #   - "traefik.http.routers.webport-erp-api.tls=true"
+    #   - "traefik.http.routers.webport-erp-api.tls.certresolver=cloudflare"
+    #   - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+    # networks:
+    #   - proxy
 
 
   webport.erp.dashboard:
@@ -33,22 +37,22 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
     ports:
-      - "5050:8080"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.webport-erp-dashboard.loadbalancer.server.port=8080"
-      - "traefik.http.routers.webport-erp-dashboard.entrypoints=https"
-      - "traefik.http.routers.webport-erp-dashboard.rule=Host(`tenantblazor.webport.co.za`)"
-      - "traefik.http.routers.webport-erp-dashboard.tls=true"
-      - "traefik.http.routers.webport-erp-dashboard.tls.certresolver=cloudflare"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-    networks:
-      - proxy
+      - "5055:8080"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.http.services.webport-erp-dashboard.loadbalancer.server.port=8080"
+#       - "traefik.http.routers.webport-erp-dashboard.entrypoints=https"
+#       - "traefik.http.routers.webport-erp-dashboard.rule=Host(`tenantblazor.webport.co.za`)"
+#       - "traefik.http.routers.webport-erp-dashboard.tls=true"
+#       - "traefik.http.routers.webport-erp-dashboard.tls.certresolver=cloudflare"
+#       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+#     networks:
+#       - proxy
 
 
-networks:
-  proxy:
-    external: true
+# networks:
+#   proxy:
+#     external: true
 
 
 

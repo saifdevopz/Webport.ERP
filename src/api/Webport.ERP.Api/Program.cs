@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+using Sentry.OpenTelemetry;
 using System.Reflection;
 using Webport.ERP.Api.Extensions;
 using Webport.ERP.Common.Application;
@@ -9,6 +10,31 @@ using Webport.ERP.Identity.Infrastructure;
 using Webport.ERP.Inventory.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseSentry(options =>
+ {
+     options.Dsn = "https://c83a8debdae82bfc2ec4f2c5017c9069@o4510097604018183.ingest.de.sentry.io/4510097610768464";
+     // Enable logs to be sent to Sentry
+     options.SendDefaultPii = true;
+     options.SampleRate = 1.0f;
+     options.TracesSampleRate = 1.0;
+     options.UseOpenTelemetry();
+ });
+
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeScopes = true;
+    logging.IncludeFormattedMessage = true;
+
+    //var otelConfig = builder.Configuration.GetSection("OpenTelemetry");
+
+    //logging.AddOtlpExporter(options =>
+    //{
+    //    options.Endpoint = new Uri(otelConfig["Endpoint"]!);
+    //    options.Headers = otelConfig["Headers"]!;
+    //    options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+    //});
+});
 
 // Database Connection Strings
 string? identityDbString = builder.Configuration["PostgreSQL:IdentityConnection"];
@@ -41,7 +67,7 @@ Assembly[] moduleApplicationAssemblies =
 builder.Services.AddCommonApplication(moduleApplicationAssemblies);
 
 // Common Infrastructure Module
-builder.Services.AddCommonInfrastructure(builder.Configuration, "Webport.Name");
+builder.Services.AddCommonInfrastructure(builder.Configuration, "Webport.ERP");
 
 // Identity and Inventory Infrastructure Modules
 builder.Services.AddIdentityModule(builder.Configuration, identityDbString);
