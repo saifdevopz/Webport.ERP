@@ -1,7 +1,7 @@
 services:
 
   webport.erp.api:
-    image: ghcr.io/saifdevopz/webport-erp-api:2
+    image: ghcr.io/saifdevopz/webport-erp-api
     container_name: webport-erp-api
     build:
       context: .

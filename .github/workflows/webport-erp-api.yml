@@ -3,7 +3,7 @@ name: Webport.ERP.API CI/CD
 on:
   push:
     branches:
-      - dev
+      - master
   workflow_dispatch:
 
 jobs:
@@ -54,5 +54,5 @@ jobs:
             cd /root/webport-system
             docker-compose -f docker-compose.yml stop webport.erp.api || true
             docker-compose -f docker-compose.yml rm -s -f webport.erp.api || true
-            docker-compose -f docker-compose.yml pull webport.erp.api:2         
-            docker-compose -f docker-compose.yml up -d webport.erp.api:2               
+            docker-compose -f docker-compose.yml pull webport.erp.api      
+            docker-compose -f docker-compose.yml up -d webport.erp.api              
