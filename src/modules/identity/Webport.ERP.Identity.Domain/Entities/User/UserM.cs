@@ -7,6 +7,9 @@ namespace Webport.ERP.Identity.Domain.Entities.User;
 
 public sealed class UserM : AggregateRoot
 {
+    private UserM()
+    {
+    }
 
     public int UserId { get; set; }
     public int TenantId { get; set; }

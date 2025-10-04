@@ -6,14 +6,14 @@ IdentityDBContext Migration Commands
 
 Add-Migration -Name InitialCreate -Context IdentityDbContext -OutputDir Database/Migrations -Project Webport.ERP.Identity.Infrastructure -StartupProject Webport.ERP.Api
 
-Update-Database -Context IdentityDbContext -Project Webport.ERP.Api -StartupProject Webport.ERP.Api
+Update-Database -Context IdentityDbContext -Project Webport.ERP.Api -StartupProject Webport.ERP.Api --configuration Release
 
 
 InventoryDBContext Migration Commands
 
 Add-Migration -Name InitialCreate -Context InventoryDBContext -OutputDir Database/Migrations -Project Webport.ERP.Inventory.Infrastructure -StartupProject Webport.ERP.Api -verbose
 
-Update-Database -Context InventoryDBContext -Project Webport.ERP.Api -StartupProject Webport.ERP.Api
+Update-Database -Context InventoryDBContext -Project Webport.ERP.Api -StartupProject Webport.ERP.Api 
 
 
 -------------------------------------------------------------------------------------------------------

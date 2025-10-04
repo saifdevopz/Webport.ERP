@@ -33,6 +33,7 @@ public static class InfrastructureConfiguration
 
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
+        services.TryAddSingleton<AuditableEntityInterceptor>();
 
         services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
 

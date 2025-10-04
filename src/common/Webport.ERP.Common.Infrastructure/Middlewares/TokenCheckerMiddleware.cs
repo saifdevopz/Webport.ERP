@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Webport.ERP.Common.Infrastructure.Middlewares;
 

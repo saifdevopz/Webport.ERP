@@ -45,7 +45,7 @@ public class DataSeeder(IdentityDbContext context)
 
         RoleM[] roles =
         [
-            RoleM.Create("Admin"),             
+            RoleM.Create("Admin"),
             RoleM.Create("Customer")
         ];
 
@@ -83,8 +83,8 @@ public class DataSeeder(IdentityDbContext context)
 
         PermissionM[] permissions =
         [
-            PermissionM.Create("identity:modify"),            
-            PermissionM.Create("inventory:modify"),                       
+            PermissionM.Create("identity:modify"),
+            PermissionM.Create("inventory:modify"),
         ];
 
         await _context.Permissions.AddRangeAsync(permissions);
@@ -102,7 +102,7 @@ public class DataSeeder(IdentityDbContext context)
         [
             new RolePermissionM { RoleId = 1, PermissionId = 1 },
             new RolePermissionM { RoleId = 1, PermissionId = 2 },
-            new RolePermissionM { RoleId = 2, PermissionId = 2 }            
+            new RolePermissionM { RoleId = 2, PermissionId = 2 }
         ];
 
         await _context.RolePermissions.AddRangeAsync(rolePermissions);

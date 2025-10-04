@@ -36,7 +36,7 @@ public static class InventoryModule
         string identityDatabaseString)
     {
         services.AddScoped<TenantProvider>();
-        
+
 
         services.AddScoped(typeof(IInventoryRepository<>), typeof(InventoryRepository<>));
 
