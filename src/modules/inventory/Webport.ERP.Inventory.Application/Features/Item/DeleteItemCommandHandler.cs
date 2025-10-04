@@ -1,24 +1,23 @@
 ﻿using FluentValidation;
-using Webport.ERP.Inventory.Application.Interfaces;
 
 namespace Webport.ERP.Inventory.Application.Features.Item;
 
-public class DeleteItemCommandHandler(IInventoryRepository<ItemM> repository)
+public class DeleteItemCommandHandler(IInventoryDbContext dbContext)
     : ICommandHandler<DeleteItemCommand>
 {
     public async Task<Result> Handle(
         DeleteItemCommand command,
         CancellationToken cancellationToken)
     {
-        var model = await repository.FindOneAsync(_ => _.ItemId == command.ItemId, cancellationToken);
+        var record = await dbContext.Items.FindAsync([command.ItemId], cancellationToken);
 
-        if (model is null)
+        if (record is null)
         {
-            return Result.Failure(CustomError.NotFound("Not Found", "Record not found."));
+            return Result.Failure(CustomError.NotFound(nameof(DeleteItemCommandHandler), "Record not found."));
         }
 
-        repository.Delete(model);
-        await repository.SaveChangesAsync(cancellationToken);
+        dbContext.Items.Remove(record);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseSentry(options =>
  {
-     options.Dsn = "https://c83a8debdae82bfc2ec4f2c5017c9069@o4510097604018183.ingest.de.sentry.io/4510097610768464";
+     options.Dsn = "";
      // Enable logs to be sent to Sentry
      options.SendDefaultPii = true;
      options.SampleRate = 1.0f;

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFramework.Exceptions.PostgreSQL;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Webport.ERP.Inventory.Application.Interfaces;
+using Webport.ERP.Inventory.Application.Data;
 using Webport.ERP.Inventory.Infrastructure.Common;
 using Webport.ERP.Inventory.Infrastructure.Database;
 using Webport.ERP.Inventory.Infrastructure.Database.DataAccess;
@@ -15,9 +16,9 @@ namespace Webport.ERP.Inventory.Infrastructure;
 public static class InventoryModule
 {
     public static IServiceCollection AddInventoryModule(
-    this IServiceCollection services,
-    IConfiguration configuration,
-    string tenantDatabaseString)
+        this IServiceCollection services,
+        IConfiguration configuration,
+        string tenantDatabaseString)
     {
         ArgumentNullException.ThrowIfNull(configuration);
 
@@ -37,10 +38,9 @@ public static class InventoryModule
     {
         services.AddScoped<TenantProvider>();
 
-
         services.AddScoped(typeof(IInventoryRepository<>), typeof(InventoryRepository<>));
 
-        services.AddDbContext<InventoryDbContext>((sp, options) =>
+        services.AddDbContext<IInventoryDbContext, InventoryDbContext>((sp, options) =>
         {
             options.UseNpgsql(identityDatabaseString, npgsqlOptionsAction =>
             {
@@ -51,7 +51,8 @@ public static class InventoryModule
 
                 npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, InventoryConstants.Schema);
             })
-            .UseSnakeCaseNamingConvention();
+            .UseSnakeCaseNamingConvention()
+            .UseExceptionProcessor();
         });
 
         services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));

@@ -13,12 +13,14 @@ public sealed class ItemM : AggregateRoot, IMustHaveTenant
 
     public static ItemM Create
     (
+        int categoryId,
         string itemCode,
         string itemDesc
     )
     {
         ItemM model = new()
         {
+            CategoryId = categoryId,
             ItemCode = itemCode,
             ItemDesc = itemDesc,
         };

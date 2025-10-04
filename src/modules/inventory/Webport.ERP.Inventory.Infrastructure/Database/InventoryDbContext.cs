@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Webport.ERP.Inventory.Application.Data;
 using Webport.ERP.Inventory.Domain.Entities.Category;
 using Webport.ERP.Inventory.Domain.Entities.Item;
 using Webport.ERP.Inventory.Infrastructure.Common;
@@ -7,12 +8,12 @@ namespace Webport.ERP.Inventory.Infrastructure.Database;
 
 public sealed class InventoryDbContext(
     DbContextOptions<InventoryDbContext> options,
-    TenantProvider tenantProvider) : DbContext(options)
+    TenantProvider tenantProvider) : DbContext(options), IInventoryDbContext
 {
     private readonly int _tenantId = tenantProvider.TenantId;
 
-    internal DbSet<CategoryM> Categories => Set<CategoryM>();
-    internal DbSet<ItemM> Items => Set<ItemM>();
+    public DbSet<CategoryM> Categories => Set<CategoryM>();
+    public DbSet<ItemM> Items => Set<ItemM>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

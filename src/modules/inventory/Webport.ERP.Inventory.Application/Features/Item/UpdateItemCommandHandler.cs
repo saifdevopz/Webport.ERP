@@ -1,32 +1,34 @@
 ﻿using FluentValidation;
-using Webport.ERP.Inventory.Application.Interfaces;
 
 namespace Webport.ERP.Inventory.Application.Features.Item;
 
-public class UpdateItemCommandHandler(IInventoryRepository<ItemM> repository)
+public class UpdateItemCommandHandler(IInventoryDbContext dbContext)
     : ICommandHandler<UpdateItemCommand>
 {
     public async Task<Result> Handle(
         UpdateItemCommand command,
         CancellationToken cancellationToken)
     {
-        var model = await repository.FindOneAsync(_ => _.ItemId == command.ItemId, cancellationToken);
+        var record = await dbContext.Items.FindAsync([command.ItemId], cancellationToken);
 
-        if (model == null)
+        if (record == null)
         {
-            return Result.Failure(CustomError.NotFound("Not Found", "Record not found."));
+            return Result.Failure<UpdateItemCommand>(
+                CustomError.NotFound(nameof(UpdateItemCommand), "Record not found."));
         }
 
-        model.ItemDesc = command.ItemDesc;
+        record.ItemDesc = command.ItemDesc;
 
-        repository.Update(model);
-        await repository.SaveChangesAsync(cancellationToken);
+        dbContext.Items.Update(record);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
-        return Result.Success();
+        return Result.Success(new UpdateItemResult(record));
     }
 }
 
 public sealed record UpdateItemCommand(int ItemId, string ItemDesc) : ICommand;
+
+public sealed record UpdateItemResult(ItemM Result);
 
 public class UpdateItemCommandValidator : AbstractValidator<UpdateItemCommand>
 {

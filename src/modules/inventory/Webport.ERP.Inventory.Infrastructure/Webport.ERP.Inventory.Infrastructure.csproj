@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Webport.ERP.Inventory.Presentation\Webport.ERP.Inventory.Presentation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Outbox\Testing\" />
+  </ItemGroup>
+
 </Project>

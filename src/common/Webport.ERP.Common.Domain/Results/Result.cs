@@ -30,11 +30,5 @@ public class Result<T>(T? data, bool isSuccess, CustomError error) : Result(isSu
     public T Data => IsSuccess
         ? _data!
         : throw new InvalidOperationException("Cannot access the value of a failed result.");
-
-    [SuppressMessage("Design", "CA1000:Do not declare static members on generic types", Justification = "<Pending>")]
-    public static Result<T> ValidationFailure(CustomError error)
-    {
-        return new(default, false, error);
-    }
 }
 

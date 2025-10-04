@@ -1,19 +1,17 @@
-﻿using Webport.ERP.Inventory.Application.Interfaces;
+﻿namespace Webport.ERP.Inventory.Application.Features.Category;
 
-namespace Webport.ERP.Inventory.Application.Features.Category;
-
-public class GetCategoryByIdQueryHandler(IInventoryRepository<CategoryM> repository)
+public class GetCategoryByIdQueryHandler(IInventoryDbContext dbContext)
     : IQueryHandler<GetCategoryByIdQuery, GetCategoryByIdQueryResult>
 {
     public async Task<Result<GetCategoryByIdQueryResult>> Handle(
         GetCategoryByIdQuery query,
         CancellationToken cancellationToken)
     {
-        var model = await repository.FindOneAsync(_ => _.CategoryId == query.CategoryId, cancellationToken);
+        var record = await dbContext.Categories.FindAsync([query.CategoryId], cancellationToken);
 
-        return model is not null
-            ? Result.Success(new GetCategoryByIdQueryResult(model))
-            : Result.Failure<GetCategoryByIdQueryResult>(CustomError.NotFound("Not Found", "Record not found."));
+        return record is null
+            ? Result.Failure<GetCategoryByIdQueryResult>(CustomError.NotFound(nameof(GetCategoryByIdQueryHandler), "Record not found."))
+            : Result.Success(new GetCategoryByIdQueryResult(record));
     }
 }
 

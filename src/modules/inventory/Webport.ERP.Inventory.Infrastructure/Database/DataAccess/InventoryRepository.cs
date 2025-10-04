@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Webport.ERP.Inventory.Application.Interfaces;
+using Webport.ERP.Inventory.Application.Data;
 
 namespace Webport.ERP.Inventory.Infrastructure.Database.DataAccess;
 
@@ -72,7 +72,9 @@ public class InventoryRepository<TEntity> : IInventoryRepository<TEntity>
     private DbSet<TEntity> Get(FindOptions? findOptions = null)
     {
         findOptions ??= new FindOptions();
+
         DbSet<TEntity> entity = _dbContext.Set<TEntity>();
+
         if (findOptions.IsAsNoTracking && findOptions.IsIgnoreAutoIncludes)
         {
             entity.IgnoreAutoIncludes().AsNoTracking();
@@ -85,6 +87,7 @@ public class InventoryRepository<TEntity> : IInventoryRepository<TEntity>
         {
             entity.AsNoTracking();
         }
+
         return entity;
     }
 }

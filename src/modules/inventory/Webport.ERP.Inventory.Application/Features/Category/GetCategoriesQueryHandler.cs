@@ -1,17 +1,19 @@
-﻿using Webport.ERP.Inventory.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Webport.ERP.Inventory.Application.Features.Category;
 
-public class GetCategoriesQueryHandler(IInventoryRepository<CategoryM> repository)
+public class GetCategoriesQueryHandler(IInventoryDbContext dbContext)
     : IQueryHandler<GetCategoriesQuery, GetCategoriesQueryResult>
 {
     public async Task<Result<GetCategoriesQueryResult>> Handle(
         GetCategoriesQuery query,
         CancellationToken cancellationToken)
     {
-        var model = await repository.GetAllAsync(cancellationToken);
+        var records = await dbContext.Categories
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
 
-        return Result.Success(new GetCategoriesQueryResult(model));
+        return Result.Success(new GetCategoriesQueryResult(records));
     }
 }
 

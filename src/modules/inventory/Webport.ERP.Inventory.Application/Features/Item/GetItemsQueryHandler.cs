@@ -1,20 +1,22 @@
-﻿using Webport.ERP.Inventory.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Webport.ERP.Inventory.Application.Features.Item;
 
-public class GetItemsQueryHandler(IInventoryRepository<ItemM> repository)
+public class GetItemsQueryHandler(IInventoryDbContext dbContext)
     : IQueryHandler<GetItemsQuery, GetItemsQueryResult>
 {
     public async Task<Result<GetItemsQueryResult>> Handle(
         GetItemsQuery query,
         CancellationToken cancellationToken)
     {
-        var model = await repository.GetAllAsync(cancellationToken);
+        List<ItemM> records = await dbContext.Items
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
 
-        return Result.Success(new GetItemsQueryResult(model));
+        return Result.Success(new GetItemsQueryResult(records));
     }
 }
 
 public sealed record GetItemsQuery : IQuery<GetItemsQueryResult>;
 
-public sealed record GetItemsQueryResult(IEnumerable<ItemM> Obj);
+public sealed record GetItemsQueryResult(IEnumerable<ItemM> Items);

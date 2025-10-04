@@ -1,25 +1,24 @@
 ﻿
 using FluentValidation;
-using Webport.ERP.Inventory.Application.Interfaces;
 
 namespace Webport.ERP.Inventory.Application.Features.Category;
 
-public class DeleteCategoryCommandHandler(IInventoryRepository<CategoryM> repository)
+public class DeleteCategoryCommandHandler(IInventoryDbContext dbContext)
     : ICommandHandler<DeleteCategoryCommand>
 {
     public async Task<Result> Handle(
         DeleteCategoryCommand command,
         CancellationToken cancellationToken)
     {
-        var model = await repository.FindOneAsync(_ => _.CategoryId == command.CategoryId, cancellationToken);
+        var record = await dbContext.Categories.FindAsync([command.CategoryId], cancellationToken);
 
-        if (model is null)
+        if (record is null)
         {
-            return Result.Failure(CustomError.NotFound("Not Found", "Record not found."));
+            return Result.Failure(CustomError.NotFound(nameof(DeleteCategoryCommandHandler), "Record not found."));
         }
 
-        repository.Delete(model);
-        await repository.SaveChangesAsync(cancellationToken);
+        dbContext.Categories.Remove(record);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

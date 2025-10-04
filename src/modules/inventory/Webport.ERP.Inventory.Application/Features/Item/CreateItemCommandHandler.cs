@@ -1,30 +1,42 @@
 ﻿using FluentValidation;
-using Webport.ERP.Inventory.Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Webport.ERP.Inventory.Application.Features.Item;
 
-public class CreateItemCommandHandler(IInventoryRepository<ItemM> repository)
+public class CreateItemCommandHandler(IInventoryDbContext dbContext)
     : ICommandHandler<CreateItemCommand>
 {
     public async Task<Result> Handle(
         CreateItemCommand command,
         CancellationToken cancellationToken)
     {
-        var model = ItemM.Create(command.ItemCode, command.ItemDesc);
+        var record = await dbContext.Items
+            .SingleOrDefaultAsync(_ => _.ItemCode == command.ItemCode, cancellationToken);
 
-        await repository.AddAsync(model);
-        await repository.SaveChangesAsync(cancellationToken);
+        if (record != null)
+        {
+            return Result.Failure<CreateItemCommand>(
+                CustomError.Problem(nameof(CreateItemCommand), "Record already exist."));
+        }
+
+        var item = ItemM.Create(command.CategoryId,
+                                command.ItemCode,
+                                command.ItemDesc);
+
+        await dbContext.Items.AddAsync(item, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
 }
 
-public sealed record CreateItemCommand(string ItemCode, string ItemDesc) : ICommand;
+public sealed record CreateItemCommand(int CategoryId, string ItemCode, string ItemDesc) : ICommand;
 
 public class CreateItemCommandValidator : AbstractValidator<CreateItemCommand>
 {
     public CreateItemCommandValidator()
     {
+        RuleFor(_ => _.CategoryId).NotEmpty().NotNull();
         RuleFor(_ => _.ItemCode).NotEmpty();
         RuleFor(_ => _.ItemDesc).NotEmpty();
     }

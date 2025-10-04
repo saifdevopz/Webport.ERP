@@ -79,6 +79,7 @@ public sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logge
             });
             exception = exception.InnerException;
         }
+
         return innerExceptions;
     }
 }

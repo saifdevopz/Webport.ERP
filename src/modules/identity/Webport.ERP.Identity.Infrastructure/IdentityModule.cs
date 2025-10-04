@@ -66,6 +66,7 @@ public static class IdentityModule
         services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
         services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
+
     private static void AddDomainEventHandlers(this IServiceCollection services)
     {
         Type[] domainEventHandlers = [.. Application.AssemblyReference.Assembly

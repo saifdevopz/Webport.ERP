@@ -9,6 +9,7 @@ internal static class MailExtension
     {
         services.AddTransient<IMailService, MailService>();
         services.AddOptions<MailOptions>().BindConfiguration(nameof(MailOptions));
+
         return services;
     }
 }

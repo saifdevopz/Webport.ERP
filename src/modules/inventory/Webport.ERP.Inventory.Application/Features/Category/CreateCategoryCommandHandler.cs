@@ -1,19 +1,29 @@
 ﻿using FluentValidation;
-using Webport.ERP.Inventory.Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Webport.ERP.Inventory.Application.Features.Category;
 
-public sealed class CreateCategoryCommandHandler(IInventoryRepository<CategoryM> repository)
+public sealed class CreateCategoryCommandHandler(IInventoryDbContext dbContext)
     : ICommandHandler<CreateCategoryCommand>
 {
     public async Task<Result> Handle(
         CreateCategoryCommand command,
         CancellationToken cancellationToken)
     {
-        var model = CategoryM.Create(command.CategoryCode, command.CategoryDesc);
+        var record = await dbContext.Categories
+            .SingleOrDefaultAsync(_ => _.CategoryCode == command.CategoryCode, cancellationToken);
 
-        await repository.AddAsync(model);
-        await repository.SaveChangesAsync(cancellationToken);
+        if (record != null)
+        {
+            return Result.Failure<CreateCategoryCommand>(
+                CustomError.Problem(nameof(CreateCategoryCommand), "Record already exist."));
+        }
+
+
+        var category = CategoryM.Create(command.CategoryCode, command.CategoryDesc);
+
+        await dbContext.Categories.AddAsync(category, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
@@ -25,8 +35,13 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
 {
     public CreateCategoryCommandValidator()
     {
-        RuleFor(_ => _.CategoryCode).NotEmpty();
-        RuleFor(_ => _.CategoryDesc).NotEmpty();
+        RuleFor(x => x.CategoryCode)
+            .NotEmpty().WithMessage("Category code is required.")
+            .MaximumLength(20).WithMessage("Category code must not exceed 20 characters.");
+
+        RuleFor(x => x.CategoryDesc)
+            .NotEmpty().WithMessage("Category description is required.")
+            .MaximumLength(255).WithMessage("Category description must not exceed 255 characters.");
     }
 }
 

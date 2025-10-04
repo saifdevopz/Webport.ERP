@@ -28,16 +28,21 @@ public static class InfrastructureConfiguration
         // Mail
         services.ConfigureMailing();
 
+        // Authentication & Authorization
         services.AddAuthenticationInternal();
         services.AddAuthorizationInternal();
 
+        // DateTime Provider
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        // EF Core Interceptors
         services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
         services.TryAddSingleton<AuditableEntityInterceptor>();
 
+        // Database
         services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
-        //Quartz
+        // Quartz
         services.AddQuartz(configurator =>
         {
             Guid scheduler = Guid.NewGuid();
@@ -72,7 +77,7 @@ public static class InfrastructureConfiguration
                     tracing
                         .AddHttpClientInstrumentation()
                         .AddAspNetCoreInstrumentation()
-                        .AddEntityFrameworkCoreInstrumentation()         
+                        .AddEntityFrameworkCoreInstrumentation()
                         .AddNpgsql()
                         .AddSentry();
 

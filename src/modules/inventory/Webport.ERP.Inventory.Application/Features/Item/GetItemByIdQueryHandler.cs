@@ -1,19 +1,17 @@
-﻿using Webport.ERP.Inventory.Application.Interfaces;
+﻿namespace Webport.ERP.Inventory.Application.Features.Item;
 
-namespace Webport.ERP.Inventory.Application.Features.Item;
-
-public class GetItemByIdQueryHandler(IInventoryRepository<ItemM> repository)
+public class GetItemByIdQueryHandler(IInventoryDbContext dbContext)
     : IQueryHandler<GetItemByIdQuery, GetItemByIdQueryResult>
 {
     public async Task<Result<GetItemByIdQueryResult>> Handle(
         GetItemByIdQuery query,
         CancellationToken cancellationToken)
     {
-        var model = await repository.FindOneAsync(_ => _.ItemId == query.ItemId, cancellationToken);
+        var record = await dbContext.Items.FindAsync([query.ItemId], cancellationToken);
 
-        return model is not null
-            ? Result.Success(new GetItemByIdQueryResult(model))
-            : Result.Failure<GetItemByIdQueryResult>(CustomError.NotFound("Not Found", "Record not found."));
+        return record is null
+            ? Result.Failure<GetItemByIdQueryResult>(CustomError.NotFound(nameof(GetItemByIdQueryHandler), "Record not found."))
+            : Result.Success(new GetItemByIdQueryResult(record));
     }
 }
 
