@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Webport.ERP.Inventory.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreatev1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -95,10 +95,10 @@ namespace Webport.ERP.Inventory.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_categories_category_code",
+                name: "ix_categories_tenant_id_category_code",
                 schema: "inventory",
                 table: "categories",
-                column: "category_code",
+                columns: ["tenant_id", "category_code"],
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -108,10 +108,10 @@ namespace Webport.ERP.Inventory.Infrastructure.Database.Migrations
                 column: "category_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_items_item_code",
+                name: "ix_items_tenant_id_item_code",
                 schema: "inventory",
                 table: "items",
-                column: "item_code",
+                columns: ["tenant_id", "item_code"],
                 unique: true);
         }
 

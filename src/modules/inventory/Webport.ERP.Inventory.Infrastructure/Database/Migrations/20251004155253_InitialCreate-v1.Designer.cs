@@ -12,8 +12,8 @@ using Webport.ERP.Inventory.Infrastructure.Database;
 namespace Webport.ERP.Inventory.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20250928035342_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251004155253_InitialCreate-v1")]
+    partial class InitialCreatev1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,9 +129,9 @@ namespace Webport.ERP.Inventory.Infrastructure.Database.Migrations
                     b.HasKey("CategoryId")
                         .HasName("pk_categories");
 
-                    b.HasIndex("CategoryCode")
+                    b.HasIndex("TenantId", "CategoryCode")
                         .IsUnique()
-                        .HasDatabaseName("ix_categories_category_code");
+                        .HasDatabaseName("ix_categories_tenant_id_category_code");
 
                     b.ToTable("categories", "inventory");
                 });
@@ -193,9 +193,9 @@ namespace Webport.ERP.Inventory.Infrastructure.Database.Migrations
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_items_category_id");
 
-                    b.HasIndex("ItemCode")
+                    b.HasIndex("TenantId", "ItemCode")
                         .IsUnique()
-                        .HasDatabaseName("ix_items_item_code");
+                        .HasDatabaseName("ix_items_tenant_id_item_code");
 
                     b.ToTable("items", "inventory");
                 });

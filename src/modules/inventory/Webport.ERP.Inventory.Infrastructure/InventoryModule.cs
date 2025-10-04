@@ -40,23 +40,41 @@ public static class InventoryModule
 
         services.AddScoped(typeof(IInventoryRepository<>), typeof(InventoryRepository<>));
 
-        services.AddDbContext<IInventoryDbContext, InventoryDbContext>((sp, options) =>
+        if (configuration["DatabaseType:Active"] == "PostgreSQL")
         {
-            options.UseNpgsql(identityDatabaseString, npgsqlOptionsAction =>
+            services.AddDbContext<IInventoryDbContext, InventoryDbContext>((sp, options) =>
             {
-                npgsqlOptionsAction.EnableRetryOnFailure(
+                options.UseNpgsql(identityDatabaseString, npgsqlOptionsAction =>
+                {
+                    npgsqlOptionsAction.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(2),
+                            errorCodesToAdd: null);
+
+                    npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, InventoryConstants.Schema);
+                })
+                .UseSnakeCaseNamingConvention()
+                .UseExceptionProcessor();
+            });
+        }
+        else if (configuration["DatabaseType:Active"] == "SQLServer")
+        {
+            services.AddDbContext<IInventoryDbContext, InventoryDbContext>((sp, options) =>
+            {
+                options.UseSqlServer(identityDatabaseString, sqlServerOptionsAction =>
+                {
+                    sqlServerOptionsAction.EnableRetryOnFailure(
                         maxRetryCount: 5,
                         maxRetryDelay: TimeSpan.FromSeconds(2),
-                        errorCodesToAdd: null);
+                        errorNumbersToAdd: null);
 
-                npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, InventoryConstants.Schema);
-            })
-            .UseSnakeCaseNamingConvention()
-            .UseExceptionProcessor();
-        });
+                    sqlServerOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, InventoryConstants.Schema);
+                });
+            });
+        }
 
-        services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
-        services.ConfigureOptions<ConfigureProcessOutboxJob>();
+        //services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
+        // services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)

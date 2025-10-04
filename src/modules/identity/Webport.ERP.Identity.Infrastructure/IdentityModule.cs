@@ -46,25 +46,43 @@ public static class IdentityModule
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPermissionService, PermissionService>();
 
-        services.AddDbContext<IdentityDbContext>((sp, options) =>
+        if (configuration["DatabaseType:Active"] == "PostgreSQL")
         {
-            options.UseNpgsql(systemDatabaseString, npgsqlOptionsAction =>
+            services.AddDbContext<IdentityDbContext>((sp, options) =>
             {
-                npgsqlOptionsAction.EnableRetryOnFailure(
+                options.UseNpgsql(systemDatabaseString, npgsqlOptionsAction =>
+                {
+                    npgsqlOptionsAction.EnableRetryOnFailure(
+                            maxRetryCount: 1,
+                            maxRetryDelay: TimeSpan.FromSeconds(2),
+                            errorCodesToAdd: null);
+
+                    npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, IdentityConstants.Schema);
+                })
+                .UseSnakeCaseNamingConvention()
+                .AddInterceptors(
+                    sp.GetRequiredService<AuditableEntityInterceptor>(),
+                    sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
+            });
+        }
+        else if (configuration["DatabaseType:Active"] == "SQLServer")
+        {
+            services.AddDbContext<IdentityDbContext>((sp, options) =>
+            {
+                options.UseSqlServer(systemDatabaseString, sqlServerOptionsAction =>
+                {
+                    sqlServerOptionsAction.EnableRetryOnFailure(
                         maxRetryCount: 5,
                         maxRetryDelay: TimeSpan.FromSeconds(2),
-                        errorCodesToAdd: null);
+                        errorNumbersToAdd: null);
 
-                npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, IdentityConstants.Schema);
-            })
-            .UseSnakeCaseNamingConvention()
-            .AddInterceptors(
-                sp.GetRequiredService<AuditableEntityInterceptor>(),
-                sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
-        });
+                    sqlServerOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, IdentityConstants.Schema);
+                });
+            });
+        }
 
-        services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
-        services.ConfigureOptions<ConfigureProcessOutboxJob>();
+        //services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
+        //services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)

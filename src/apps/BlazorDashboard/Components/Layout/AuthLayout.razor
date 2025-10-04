@@ -1,5 +1,25 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        @Body
+    </ChildContent>
+
+    <ErrorContent Context="exception">
+        <p>Auth Layout - Error Boundary</p>        
+        <p>@exception.GetType()</p>
+        <p>@exception.Message</p>
+        <p>@exception.StackTrace</p>
+        <button onclick="() => errorBoundary?.Recover()">Try Again</button>
+    </ErrorContent>
+</ErrorBoundary>
 
 
+@code{
+	private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+}

@@ -37,10 +37,34 @@ builder.Logging.AddOpenTelemetry(logging =>
 });
 
 // Database Connection Strings
-string? identityDbString = builder.Configuration["PostgreSQL:IdentityConnection"];
-ArgumentException.ThrowIfNullOrWhiteSpace(identityDbString);
 
-string? tenantDbString = builder.Configuration["PostgreSQL:TenantConnection"];
+string? databaseType = builder.Configuration["DatabaseType:Active"];
+string? identityDbString = null;
+string? tenantDbString = null;
+
+if (string.IsNullOrWhiteSpace(databaseType))
+{
+    throw new ArgumentException("Database type is not configured (DatabaseType:Active).");
+}
+
+switch (databaseType.Trim().ToUpperInvariant())
+{
+    case "POSTGRESQL":
+        identityDbString = builder.Configuration["PostgreSQL:IdentityConnection"];
+        tenantDbString = builder.Configuration["PostgreSQL:TenantConnection"];
+        break;
+
+    case "SQLSERVER":
+        identityDbString = builder.Configuration["SQLServer:IdentityConnection"];
+        tenantDbString = builder.Configuration["SQLServer:TenantConnection"];
+        break;
+
+    default:
+        throw new ArgumentException($"Unsupported database type: {databaseType}");
+}
+
+// Validate connection strings
+ArgumentException.ThrowIfNullOrWhiteSpace(identityDbString);
 ArgumentException.ThrowIfNullOrWhiteSpace(tenantDbString);
 
 // Controller Support
