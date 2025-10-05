@@ -6,6 +6,3 @@ public class CategoryDto
     public string CategoryCode { get; set; } = string.Empty;
     public string CategoryDesc { get; set; } = string.Empty;
 }
-
-public record CategoryWrapper<T>(T Category);
-public record CategoriesWrapper<T>(IEnumerable<T> Categories);

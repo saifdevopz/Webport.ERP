@@ -1,5 +1,6 @@
 ﻿@page "/category/modify"
 @page "/category/modify/{Id}"
+
 @attribute [Authorize(Roles = "Customer")]
 
 <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
@@ -44,8 +45,8 @@
 
     private async Task<CategoryDto> GetCategory()
     {
-        var response = await _DataService.GetByIdAsync<CategoryWrapper<CategoryDto>>("category", Id!);
-        return response.Data!.Category;
+        var response = await _DataService.GetByIdAsync<Wrapper<CategoryDto>>("category", Id!);
+        return response.Data!.Record;
     }
 
     private async Task OnValidSubmit(EditContext context)

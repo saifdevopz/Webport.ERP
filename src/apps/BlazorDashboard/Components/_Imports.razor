@@ -1,7 +1,5 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
-@using BlazorDashboard.Common.Services.Implementations
-@using BlazorDashboard.Common.Services.Interfaces
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -10,13 +8,18 @@
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
+
+@* Blazor *@
 @using BlazorDashboard
 @using BlazorDashboard.Components
 @using BlazorDashboard.Components.Layout
 @using BlazorDashboard.Components.Layout.Sidebar
-
-
+@using BlazorDashboard.Common.Services.Implementations
+@using BlazorDashboard.Common.Services.Interfaces
 @using MudBlazor
+
+@* Contracts *@
+@using Webport.ERP.Common.Domain.Results
 @using Webport.ERP.Common.Domain.Contracts.Identity
 @using Webport.ERP.Common.Domain.Contracts.Inventory
 
@@ -27,6 +30,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IHttpContextAccessor _HttpContextAccessor
 
+@* Services *@
 @inject ITokenService _ITokenService
 @inject DataService _DataService
 @inject ITenantContext _TenantContext

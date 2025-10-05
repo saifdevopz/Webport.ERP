@@ -8,6 +8,3 @@ public class ItemDto
 
     public CategoryDto Category { get; set; } = new();
 }
-
-public record ItemWrapper<T>(T Category);
-public record ItemsWrapper<T>(IEnumerable<T> Categories);

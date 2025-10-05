@@ -1,5 +1,6 @@
 ﻿@page "/category/index"
-@using Webport.ERP.Common.Domain.Results
+
+@attribute [Authorize(Roles = "Customer")]
 
 <MudText Typo="Typo.h6">Category Index</MudText>
 

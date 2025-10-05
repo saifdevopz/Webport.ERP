@@ -51,7 +51,7 @@ internal static class SidebarData
 
         new MenuItem(title: "Item", icon: "ri-archive-2-fill", suffix: new("Hot", "primary"), childMenuItems:
         [
-            new MenuItem(href:"/category/index", title:"Items"),
+            new MenuItem(href:"/item/index", title:"Items"),
             new MenuItem(href:"/role/index", title:"Item Enquiries"),
         ]),
     ];

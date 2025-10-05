@@ -33,3 +33,4 @@ public class Result<T>(T? data, bool isSuccess, CustomError error) : Result(isSu
 }
 
 public record ListWrapper<T>(IEnumerable<T> Records);
+public record Wrapper<T>(T Record);
