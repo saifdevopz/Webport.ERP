@@ -17,4 +17,4 @@ public class GetCategoryByIdQueryHandler(IInventoryDbContext dbContext)
 
 public sealed record GetCategoryByIdQuery(int CategoryId) : IQuery<GetCategoryByIdQuery>;
 
-public sealed record GetCategoryByIdQueryResult(CategoryM Category);
+public sealed record GetCategoryByIdQueryResult(CategoryM Record);

@@ -19,4 +19,4 @@ public class GetCategoriesQueryHandler(IInventoryDbContext dbContext)
 
 public sealed record GetCategoriesQuery : IQuery<GetCategoriesQueryResult>;
 
-public sealed record GetCategoriesQueryResult(IEnumerable<CategoryM> Categories);
+public sealed record GetCategoriesQueryResult(IEnumerable<CategoryM> Records);

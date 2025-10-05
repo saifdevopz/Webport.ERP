@@ -27,8 +27,6 @@
 
 </li>
 
-
-
 @code {
     [Parameter]
     public MenuItem? MenuItem { get; set; }
@@ -47,5 +45,4 @@
         parent.IsOpened = true;
         return MenuItemClickCallback.InvokeAsync(child);
     }
-
 }

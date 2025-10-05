@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using BlazorDashboard.Common.Services.Interfaces;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace BlazorDashboard.Common.Authentication;
 
-public class CustomAuthenticationStateProvider(IHttpContextAccessor httpContextAccessor) : AuthenticationStateProvider
+public class CustomAuthenticationStateProvider(
+    IHttpContextAccessor httpContextAccessor,
+    ITenantContext tenantContext) : AuthenticationStateProvider
 {
     private readonly ClaimsPrincipal _anonymous = new(new ClaimsIdentity());
 
@@ -33,6 +36,9 @@ public class CustomAuthenticationStateProvider(IHttpContextAccessor httpContextA
             var identity = new ClaimsIdentity(jwtToken.Claims, "jwt");
             var user = new ClaimsPrincipal(identity);
 
+            // Initialize TenantContext from JWT claims
+            tenantContext.InitializeFromUser(user);
+
             return Task.FromResult(new AuthenticationState(user));
         }
         catch (ArgumentException)
@@ -53,6 +59,9 @@ public class CustomAuthenticationStateProvider(IHttpContextAccessor httpContextA
         var jwtToken = handler.ReadJwtToken(token);
         var identity = new ClaimsIdentity(jwtToken.Claims, "jwt");
         var user = new ClaimsPrincipal(identity);
+
+        // Initialize TenantContext from JWT claims
+        tenantContext.InitializeFromUser(user);
 
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
     }

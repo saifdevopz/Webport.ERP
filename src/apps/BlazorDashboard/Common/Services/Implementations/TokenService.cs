@@ -1,7 +1,7 @@
 ﻿using BlazorDashboard.Common.HttpClients;
 using BlazorDashboard.Common.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Webport.ERP.Common.Domain.DataTransferObjects.System;
+using Webport.ERP.Common.Domain.Contracts.Identity;
 using Webport.ERP.Common.Domain.Errors;
 using Webport.ERP.Common.Domain.Results;
 

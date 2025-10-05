@@ -34,6 +34,7 @@ builder.Services.AddScoped<TenantHttpClient>();
 // Services
 builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ITenantContext, TenantContext>();
 
 // Authentication
 builder.Services.AddHttpContextAccessor();

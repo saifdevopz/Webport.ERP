@@ -17,12 +17,16 @@
 
 
 @using MudBlazor
-@using Webport.ERP.Common.Domain.DataTransferObjects.System
+@using Webport.ERP.Common.Domain.Contracts.Identity
+@using Webport.ERP.Common.Domain.Contracts.Inventory
+
 @* Injection *@
 @attribute [Authorize]
 @inject NavigationManager _NavigationManager
 @inject IJSRuntime _IJSRuntime
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IHttpContextAccessor _HttpContextAccessor
+
 @inject ITokenService _ITokenService
 @inject DataService _DataService
+@inject ITenantContext _TenantContext

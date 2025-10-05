@@ -1,5 +1,4 @@
-﻿@page "/category/index"
-@using Webport.ERP.Common.Domain.Results
+﻿@page "/item/index"
 
 <MudText Typo="Typo.h6">Category Index</MudText>
 
@@ -38,11 +37,11 @@
 
     private async Task GetCategories()
     {
-        var response = await _DataService.GetAllAsync<ListWrapper<CategoryDto>>("category");
+        var response = await _DataService.GetAllAsync<CategoriesWrapper<CategoryDto>>("category");
 
-        if (response.IsSuccess && response.Data.Records != null)
+        if (response.IsSuccess && response.Data.Categories != null /* response.Data.Category.Any() */)
         {
-            Categories = response.Data.Records.ToList();
+            Categories = response.Data.Categories.ToList();
         }
     }
 

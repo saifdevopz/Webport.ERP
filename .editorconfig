@@ -116,5 +116,8 @@ dotnet_diagnostic.S125.severity = none
 dotnet_diagnostic.S2326.severity = none
 
 
+dotnet_diagnostic.S1144.severity = none
+
+
 
 

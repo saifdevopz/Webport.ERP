@@ -1,4 +1,4 @@
-﻿using Webport.ERP.Common.Domain.DataTransferObjects.System;
+﻿using Webport.ERP.Common.Domain.Contracts.Identity;
 using Webport.ERP.Common.Domain.Results;
 
 namespace BlazorDashboard.Common.Services.Interfaces;

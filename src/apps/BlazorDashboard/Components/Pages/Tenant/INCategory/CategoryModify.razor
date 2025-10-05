@@ -1,6 +1,5 @@
 ﻿@page "/category/modify"
 @page "/category/modify/{Id}"
-@using Webport.ERP.Common.Domain.DataTransferObjects.Tenant
 @attribute [Authorize(Roles = "Customer")]
 
 <EditForm Model="@model" OnValidSubmit="OnValidSubmit">

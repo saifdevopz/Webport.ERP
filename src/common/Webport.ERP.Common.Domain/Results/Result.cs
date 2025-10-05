@@ -32,3 +32,4 @@ public class Result<T>(T? data, bool isSuccess, CustomError error) : Result(isSu
         : throw new InvalidOperationException("Cannot access the value of a failed result.");
 }
 
+public record ListWrapper<T>(IEnumerable<T> Records);

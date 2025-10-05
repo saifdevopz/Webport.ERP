@@ -9,8 +9,20 @@ public class GetItemsQueryHandler(IInventoryDbContext dbContext)
         GetItemsQuery query,
         CancellationToken cancellationToken)
     {
-        List<ItemM> records = await dbContext.Items
+        List<ItemDto> records = await dbContext.Items
             .AsNoTracking()
+            .Include(i => i.Category)
+            .Select(_ => new ItemDto
+            {
+                ItemId = _.ItemId,
+                ItemCode = _.ItemCode,
+                ItemDesc = _.ItemDesc,
+                Category = new CategoryDto
+                {
+                    CategoryCode = _.Category!.CategoryCode,
+                    CategoryDesc = _.Category.CategoryDesc
+                }
+            })
             .ToListAsync(cancellationToken);
 
         return Result.Success(new GetItemsQueryResult(records));
@@ -19,4 +31,4 @@ public class GetItemsQueryHandler(IInventoryDbContext dbContext)
 
 public sealed record GetItemsQuery : IQuery<GetItemsQueryResult>;
 
-public sealed record GetItemsQueryResult(IEnumerable<ItemM> Items);
+public sealed record GetItemsQueryResult(IEnumerable<ItemDto> Records);

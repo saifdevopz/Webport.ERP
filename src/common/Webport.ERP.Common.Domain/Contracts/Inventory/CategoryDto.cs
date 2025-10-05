@@ -1,4 +1,4 @@
-﻿namespace Webport.ERP.Common.Domain.DataTransferObjects.Tenant;
+﻿namespace Webport.ERP.Common.Domain.Contracts.Inventory;
 
 public class CategoryDto
 {

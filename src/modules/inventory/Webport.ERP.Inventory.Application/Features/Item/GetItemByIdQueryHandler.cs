@@ -17,4 +17,4 @@ public class GetItemByIdQueryHandler(IInventoryDbContext dbContext)
 
 public sealed record GetItemByIdQuery(int ItemId) : IQuery<GetItemByIdQuery>;
 
-public sealed record GetItemByIdQueryResult(ItemM Obj);
+public sealed record GetItemByIdQueryResult(ItemM Record);

@@ -9,7 +9,9 @@ internal static class SidebarData
         public List<MenuItem> Items { get; set; } = [];
     }
 
-    public static List<MenuGroup> GetMenuGroups() =>
+    // Menu Groups
+
+    public static List<MenuGroup> GetAdminMenuGroups() =>
     [
         new MenuGroup
         {
@@ -26,6 +28,32 @@ internal static class SidebarData
             Title = "Development",
             Items = GetGeneralMenuItems()
         },
+    ];
+
+    public static List<MenuGroup> GetTenantMenuGroups() =>
+    [
+        new MenuGroup
+        {
+            Title = "Inventory",
+            Items = GetInventoryItems()
+        },
+    ];
+
+    // Item Lists
+
+    public static List<MenuItem> GetInventoryItems() =>
+    [
+        new MenuItem(title: "Category", icon: "ri-archive-2-fill", suffix: new("Hot", "primary"), childMenuItems:
+        [
+            new MenuItem(href:"/category/index", title:"Categories"),
+            new MenuItem(href:"/role/index", title:"Category Enquiries"),
+        ]),
+
+        new MenuItem(title: "Item", icon: "ri-archive-2-fill", suffix: new("Hot", "primary"), childMenuItems:
+        [
+            new MenuItem(href:"/category/index", title:"Items"),
+            new MenuItem(href:"/role/index", title:"Item Enquiries"),
+        ]),
     ];
 
     public static List<MenuItem> GetIdentityItems() =>

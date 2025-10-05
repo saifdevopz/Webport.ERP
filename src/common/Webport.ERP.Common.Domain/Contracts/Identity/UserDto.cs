@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Webport.ERP.Common.Domain.DataTransferObjects.System;
+namespace Webport.ERP.Common.Domain.Contracts.Identity;
 
 public class UserDto
 {
