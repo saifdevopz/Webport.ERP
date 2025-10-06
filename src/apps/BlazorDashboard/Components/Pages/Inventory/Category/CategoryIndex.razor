@@ -1,8 +1,7 @@
 ﻿@page "/category/index"
-
 @attribute [Authorize(Roles = "Customer")]
 
-<MudText Typo="Typo.h6">Category Index</MudText>
+<MudText Typo="Typo.h6">Category List</MudText>
 
 <MudDataGrid Items="@Categories.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
     <ToolBarContent>

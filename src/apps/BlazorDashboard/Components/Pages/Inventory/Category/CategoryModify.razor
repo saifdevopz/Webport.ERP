@@ -5,7 +5,7 @@
 
 <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
-    <MudCard Elevation="1" Style="padding: 20px;">
+    <MudCard Elevation="1">
         <MudCardHeader>
             <CardHeaderContent>
                 @if(Id == null)
@@ -24,7 +24,7 @@
             <MudTextField @bind-Value="model.CategoryDesc" For="@(() => model.CategoryDesc)" Label="Description" />
         </MudCardContent>
 
-        <MudCardActions>
+        <MudCardActions Style="display: flex; justify-content: end;">
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Success">Save</MudButton>
             <MudButton OnClick="Cancel" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
         </MudCardActions>
@@ -51,16 +51,25 @@
 
     private async Task OnValidSubmit(EditContext context)
     {
+        Result response;
+
         if (string.IsNullOrWhiteSpace(Id))
         {
-            await _DataService.PostAsync("category", model);
+            response = await _DataService.PostAsync("category", model);
         }
         else
         {
-            await _DataService.PutAsync($"category", model);
+            response = await _DataService.PutAsync($"category", model);
         }
 
-        _NavigationManager.NavigateTo("/category/index");
+        if (response.IsSuccess)
+        {
+            _NavigationManager.NavigateTo("/category/index");
+        }
+        else
+        {
+            Console.WriteLine($"Error: {response.Error!.Description}");
+        }
     }
 
     void Cancel()
