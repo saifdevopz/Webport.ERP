@@ -6,7 +6,7 @@ public class CategoryDto
 {
     public int CategoryId { get; set; }
 
-    [Required(ErrorMessage = "sssss")]
+    [Required]
     public string CategoryCode { get; set; } = string.Empty;
 
     [Required]

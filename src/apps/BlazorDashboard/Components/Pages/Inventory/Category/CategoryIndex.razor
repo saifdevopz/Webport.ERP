@@ -1,13 +1,26 @@
 ﻿@page "/category/index"
+@using BlazorDashboard.Components.Shared
 @attribute [Authorize(Roles = "Customer")]
 
-<MudText Typo="Typo.h6">Category List</MudText>
+<MudText Typo="Typo.h5">Category List</MudText>
 
-<MudDataGrid Items="@Categories.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
+<MudDataGrid Items="@Categories"
+             Filterable="true"
+             ColumnResizeMode="ResizeMode.Column"
+             Dense="true"
+             Hover="true"
+             Striped="true"
+             QuickFilter="@_quickFilter">
     <ToolBarContent>
-        <MudIconButton Href="@($"category/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
+        <MudIconButton Href="@($"category/modify")" Icon="@Icons.Material.Filled.Add" />
         <MudSpacer />
-        <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="_searchString"
+                      Placeholder="Search"
+                      Adornment="Adornment.Start"
+                      Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0"></MudTextField>
     </ToolBarContent>
     <Columns>
         <PropertyColumn Property="_ => _.CategoryId" Title="Id" />
@@ -27,9 +40,47 @@
     </PagerContent>
 </MudDataGrid>
 
+<button class="cool-button" @onclick="ShowDialog">Open Dialog</button>
+
+<Dialog Title="Hello World!" @bind-Opened="dialogShown" CloseButtonClicked="@(() => dialogShown = false)">
+    <BodyContent>
+        <p style="font-size: 13px;">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero fugit vitae veritatis error perspiciatis ea eum nihil, illum ut asperiores amet quos quis eos odio laudantium ipsam ullam quidem aut cumque accusantium! Possimus at perferendis consequatur doloremque ad dolore fugiat, explicabo, veniam facere in sed accusantium ex doloribus minus obcaecati vitae tempore exercitationem dicta quia illo, sit culpa fuga. Porro quaerat quae eligendi eius voluptates! Nihil, obcaecati placeat. Dolore dicta odit odio quae libero quod cupiditate molestiae vero magnam. Fugiat mollitia nihil quae, odio possimus animi hic voluptas nesciunt minus quo unde tempora consectetur in eveniet maxime cupiditate eligendi nemo.
+        </p>
+    </BodyContent>
+
+    <FooterContent>
+        <button class="ok-button">Ok</button>
+    </FooterContent>
+</Dialog>
+
+@if (DialogIsOpen)
+{
+    <Dialog2 Caption="Delete an author"
+            Message="sss"
+            OnClose="@OnDialogClose"
+            Type="Dialog2.Category.Okay">
+    </Dialog2>
+}
+
 
 @code {
     private List<CategoryDto> Categories = new();
+    private string _searchString = "";
+
+    private bool dialogShown = false;
+    private bool DialogIsOpen = false;
+
+    private void ShowDialog()
+    {
+        dialogShown = true;
+        DialogIsOpen = true;
+    }
+
+    private void OnDialogClose(bool isOk)
+    {
+        DialogIsOpen = false;
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -51,5 +102,14 @@
         await _DataService.DeleteByIdAsync("role", id);
         await GetCategories();        
     }
+
+    private Func<CategoryDto, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString)) return true;
+
+        return x.CategoryCode.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
+            || x.CategoryDesc.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
+            || $"{x.CategoryCode} {x.CategoryDesc}".Contains(_searchString, StringComparison.OrdinalIgnoreCase);
+    };
 }
 
