@@ -5,7 +5,12 @@
 @* Required Mudblazor Tags *@
 <MudThemeProvider />
 <MudPopoverProvider />
-<MudDialogProvider />
+<MudDialogProvider FullWidth="true"
+                   MaxWidth="MaxWidth.ExtraSmall"
+                   CloseButton="true"
+                   BackdropClick="false"
+                   Position="DialogPosition.Center"
+                   CloseOnEscapeKey="true" />
 
 <ErrorBoundary @ref="errorBoundary">
     <ChildContent>
@@ -15,7 +20,7 @@
                 <div class="app">
                     <header class="app-header">
                         <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
-                        <div class="div"><h1>Dashboard</h1></div>
+                        <div class="div"><h1>Dashboard</h1></div>                        
                     </header>
                     <main class="app-body">
                         @Body

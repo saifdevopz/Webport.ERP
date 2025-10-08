@@ -1,45 +1,27 @@
-﻿﻿@if (Opened)
-{
-    <div class="overlay">
-        <div class="dialog">
-            <div class="dialog-header">
-                <div>
-                    <h1>@Title</h1>
-                </div>
-
-                <div @onclick="CloseDialog">
-                    <div class="close">
-                        <i class="bi bi-x-lg"> </i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dialog-body">
-                @BodyContent
-            </div>
-
-            <div class="dialog-footer">
-                @FooterContent
-            </div>
-        </div>
-    </div>
-}
+﻿<MudDialog>
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
 
 @code {
-    [Parameter] public string? Title { get; set; }
-    [Parameter] public RenderFragment? BodyContent { get; set; }
-    [Parameter] public RenderFragment? FooterContent { get; set; }
-    [Parameter] public bool Opened { get; set; }
-    [Parameter] public EventCallback CloseButtonClicked { get; set; }
+    [CascadingParameter]
+    private IMudDialogInstance? MudDialog { get; set; }
 
-    [Parameter] public EventCallback<bool> OpenedChanged { get; set; }
+    [Parameter]
+    public string ContentText { get; set; } = "";
 
+    [Parameter]
+    public string ButtonText { get; set; } = "";
 
-    private async void CloseDialog()
-    {
-        Opened = false;
-        await OpenedChanged.InvokeAsync(false);
-        await CloseButtonClicked.InvokeAsync();
-    }
+    [Parameter]
+    public Color Color { get; set; }
 
+    private void Submit() => MudDialog?.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog?.Cancel();
 }
