@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorDashboard.Components.Layout.Theme
+@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="ThemeConfig.CurrentTheme" />
 
 <ErrorBoundary @ref="errorBoundary">
     <ChildContent>

@@ -33,26 +33,32 @@
                 </div>
                 <EditForm Model="@model" OnValidSubmit="HandleLogin">
                     <DataAnnotationsValidator />
-
+                    <MudCardContent>
+                        <MudTextField @bind-Value="model.Email" Variant="Variant.Outlined" For="@(() => model.Email)" Label="Email" />
+                        <MudTextField @bind-Value="model.Password" Variant="Variant.Outlined" For="@(() => model.Password)" Label="Password" />
+                    </MudCardContent>
                     <div class="input-box">
-                        <InputText id="email"
+@*                         <InputText id="email"
                                    @bind-Value="model.Email"
                                    class="input-field"
                                    autocomplete="off"
                                    required />
                         <label for="email">Email or phone</label>
-                        <ValidationMessage For="@(() => model.Email)" />
+                        <ValidationMessage For="@(() => model.Email)" /> *@
+                       
+                        
                     </div>
 
                     <div class="input-box">
-                        <InputText id="password"                            
+@*                         <InputText id="password"                            
                                    @bind-Value="model.Password"
                                    type="password"
                                    class="input-field"
                                    autocomplete="off"
                                    required />
                         <label for="password">Password</label>
-                        <ValidationMessage For="@(() => model.Password)" />
+                        <ValidationMessage For="@(() => model.Password)" /> *@
+                       
                     </div>
                     <div class="forgot">
                         <section>
