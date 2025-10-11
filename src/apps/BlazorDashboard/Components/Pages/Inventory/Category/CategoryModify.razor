@@ -20,8 +20,16 @@
         </MudCardHeader>
 
         <MudCardContent>
-            <MudTextField @bind-Value="model.CategoryCode" For="@(() => model.CategoryCode)" Label="Code" ReadOnly="Id is not null" />
-            <MudTextField @bind-Value="model.CategoryDesc" For="@(() => model.CategoryDesc)" Label="Description" />
+            <MudTextField @bind-Value="model.CategoryCode" 
+                          Variant="Variant.Outlined" 
+                          For="@(() => model.CategoryCode)" 
+                          Label="Code" 
+                          ReadOnly="Id is not null" />
+
+            <MudTextField @bind-Value="model.CategoryDesc" 
+                          Variant="Variant.Outlined" 
+                          For="@(() => model.CategoryDesc)" 
+                          Label="Description" />
         </MudCardContent>
 
         <MudCardActions Style="display: flex; justify-content: end;">

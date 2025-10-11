@@ -1,70 +1,41 @@
 ﻿@page "/item/modify"
-@page "/item/modify/{Id}"
+@page "/item/modify/{ItemId}"
 
 @attribute [Authorize(Roles = "Customer")]
 
-<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator />
-    <MudCard Elevation="1" Style="padding: 20px;">
-        <MudCardHeader>
-            <CardHeaderContent>
-                @if(Id == null)
-                {
-                    <MudText Typo="Typo.h6">Add Category</MudText>
-                }
-                else
-                {
-                    <MudText Typo="Typo.h6">Update Category</MudText>
-                }
-            </CardHeaderContent>
-        </MudCardHeader>
-
-        <MudCardContent>
-            <MudTextField @bind-Value="model.CategoryCode" For="@(() => model.CategoryCode)" Label="Code" ReadOnly="Id is not null" />
-            <MudTextField @bind-Value="model.CategoryDesc" For="@(() => model.CategoryDesc)" Label="Description" />
-        </MudCardContent>
-
-        <MudCardActions>
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Success">Save</MudButton>
-            <MudButton OnClick="Cancel" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
-        </MudCardActions>
-    </MudCard>
-</EditForm>
-
-@code {
-    [Parameter] public string? Id { get; set; }
-    private CategoryDto model = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Id != null)
+<MudCardHeader>
+    <CardHeaderContent>
+        @if (ItemId == null)
         {
-            model = await GetCategory();
-        }
-    }
-
-    private async Task<CategoryDto> GetCategory()
-    {
-        var response = await _DataService.GetByIdAsync<Wrapper<CategoryDto>>("category", Id!);
-        return response.Data!.Record;
-    }
-
-    private async Task OnValidSubmit(EditContext context)
-    {
-        if (string.IsNullOrWhiteSpace(Id))
-        {
-            await _DataService.PostAsync("category", model);
+            <MudText Typo="Typo.h6">Add Item</MudText>
         }
         else
         {
-            await _DataService.PutAsync($"category", model);
+            <MudText Typo="Typo.h6">Update Item</MudText>
         }
+    </CardHeaderContent>
+</MudCardHeader>
 
-        _NavigationManager.NavigateTo("/category/index");
-    }
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Text="Description">
+        <ItemDesc ItemId="@ItemId" />
+    </MudTabPanel>
+    <MudTabPanel Text="Quantity">
+        <MudText>Content Two</MudText>
+        <ItemDesc ItemId="@ItemId" />
+    </MudTabPanel>
+    <MudTabPanel Text="Attributes">
+        <MudText>Content Three</MudText>
+        <ItemDesc ItemId="@ItemId" />
+    </MudTabPanel>
+    <MudTabPanel Text="Images" Disabled="true">
+        <MudText>Content Disabled</MudText>
+        <ItemDesc ItemId="@ItemId" />
+    </MudTabPanel>
+</MudTabs>
 
-    void Cancel()
-    {
-        _NavigationManager.NavigateTo("/category/index");
-    }
+
+
+@code {
+    [Parameter] public required string ItemId { get; set; }
 }

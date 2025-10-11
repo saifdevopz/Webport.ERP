@@ -59,8 +59,18 @@
                             <a href="#" class="forgot-link">Forgot password?</a>
                         </section>
                     </div>
-                    <div class="input-box">                        
-                        <button type="submit" class="input-submit">Sign In</button>
+                    <div class="input-box">                     
+                        
+                            @if (isLoading)
+                            {
+                            <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                            }
+                            else
+                            {
+                            <button type="submit" class="input-submit" disabled="@isLoading">Sign In</button>
+                            }             
+                            
+
                     </div>
                     <div class="middle-text">
                         <hr />
@@ -90,13 +100,15 @@
 
     public string? ErrorMessage { get; set; }
     internal LoginDto model { get; set; } = new();
+
+    private bool isLoading = false;
     private bool _navigated;
 
     protected override void OnInitialized()
     {
         #if DEBUG
-            model.Email = "customer1@gmail.com";
-            model.Password = "12345678";
+    model.Email = "customer1@gmail.com";
+    model.Password = "12345678";
         #endif
     }
 
@@ -121,15 +133,24 @@
 
     public async Task HandleLogin()
     {
-        var response = await _ITokenService.AccessToken(model);
+        isLoading = true;
 
-        if (response.IsSuccess)
+        try
         {
-            _NavigationManager.NavigateTo("/account/postlogin?Token=" + response.Data.Token, forceLoad: true);
+            var response = await _ITokenService.AccessToken(model);
+
+            if (response.IsSuccess)
+            {
+                _NavigationManager.NavigateTo($"/account/postlogin?Token={response.Data.Token}", forceLoad: true);
+            }
+            else
+            {
+                ErrorMessage = response.Error!.Description;
+            }
         }
-        else
+        finally
         {
-            ErrorMessage = response.Error!.Description;
+            isLoading = false;
         }
     }
 

@@ -1,0 +1,57 @@
+﻿@page "/settings"
+@using BlazorDashboard.Components.Layout.Theme
+
+<MudButton Color="Color.Primary">ss</MudButton>
+
+<div class="theme-picker">
+    @foreach (var item in ThemeConfig.Themes)
+    {
+        <div class="color-option @(IsActive(item.Name))"
+             style="background-color: @item.ColorHex;"
+             @onclick="() => ChangeTheme(item.Name)">
+        </div>
+    }
+</div>
+
+<style>
+    .theme-picker {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    .color-option {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 0 0 2px #ccc;
+    }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            box-shadow: 0 0 0 3px var(--mud-palette-primary, #000);
+            transform: scale(1.15);
+        }
+</style>
+
+@code {
+    private static string IsActive(string themeName)
+        => ThemeConfig.CurrentThemeName == themeName ? "active" : "";
+
+    private void ChangeTheme(string themeName)
+    {
+        var item = ThemeConfig.Themes.FirstOrDefault(t => t.Name == themeName);
+        if (item is not null)
+        {
+            ThemeConfig.CurrentTheme = item.Theme;
+            ThemeConfig.CurrentThemeName = item.Name;
+        }
+
+        StateHasChanged();
+    }
+}

@@ -23,9 +23,7 @@
                                             MenuItemClickCallback="MenuItemClick" />
                     }
                 }
-            }
-
-            <li class="menu-title-li" @onclick="LogoutClicked">Logout</li>
+            }            
         </ul>
     </nav>
 </aside>
@@ -48,10 +46,7 @@
         };
     }
 
-    private void LogoutClicked()
-    {
-        _NavigationManager.NavigateTo("/logout", forceLoad: true);
-    }
+
 
     private async Task MenuItemClick(MenuItem clickedItem)
     {

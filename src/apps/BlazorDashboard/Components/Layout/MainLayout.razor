@@ -1,9 +1,11 @@
-﻿@using BlazorDashboard.Components.Shared
+﻿@using BlazorDashboard.Components.Layout.Theme
+@using BlazorDashboard.Components.Shared
 @using MudBlazor
 @inherits LayoutComponentBase
 
 @* Required Mudblazor Tags *@
-<MudThemeProvider />
+<MudThemeProvider Theme="ThemeConfig.CurrentTheme"
+    IsDarkMode="ThemeConfig.IsDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider FullWidth="true"
                    MaxWidth="MaxWidth.ExtraSmall"
@@ -20,13 +22,23 @@
                 <div class="app">
                     <header class="app-header">
                         <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
-                        <div class="div"><h1>Dashboard</h1></div>                        
+                        <div class="div"><h1>Dashboard</h1></div>       
+                        <MudMenu Label="Open menu">
+                            @foreach (var themeName in ThemeConfig.Themes.Select(item => item.Name))
+                            {
+                                <MudMenuItem @onclick="() => ChangeTheme(themeName)" Label="@themeName" />
+                            }
+
+                            <MudMenuItem Label="Settings" @onclick="NavigateToSettings" />
+                            <MudMenuItem Label="Logout" @onclick="LogoutClicked" />
+                        </MudMenu>
                     </header>
                     <main class="app-body">
                         @Body
                     </main>
                     <footer class="app-footer">
                         <span>© @DateTime.Now.Year WEBPORT. All rights reserved.</span>
+                        <button @onclick="Test">Toggle Dark Mode</button>
                     </footer>
                     <div @onclick="ToggleSidebar" class="overlay @(isSidebarActive ? "active" : "")"></div>
                 </div>       
@@ -44,8 +56,62 @@
     </ErrorContent>
 </ErrorBoundary>
 
+<style>
+    .theme-picker {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    .color-option {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 0 0 2px #ccc;
+    }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            box-shadow: 0 0 0 3px var(--mud-palette-primary, #000);
+            transform: scale(1.15);
+        }
+</style>
+
 @code {
     private ErrorBoundary? errorBoundary;
+
+    private static void Test()
+    {
+        ThemeConfig.IsDarkMode = !ThemeConfig.IsDarkMode;
+    }
+
+
+
+    private static void ChangeTheme(string themeName)
+    {
+        var item = ThemeConfig.Themes.FirstOrDefault(t => t.Name == themeName);
+
+        if (item is not null)
+        {
+            ThemeConfig.CurrentTheme = item.Theme;
+            ThemeConfig.CurrentThemeName = item.Name;            
+        }
+    }
+
+    private void LogoutClicked()
+    {
+        _NavigationManager.NavigateTo("/logout", forceLoad: true);
+    }
+
+    private void NavigateToSettings()
+    {
+        _NavigationManager.NavigateTo("/settings", forceLoad: false);
+    }
 
     protected override void OnParametersSet()
     {
@@ -57,5 +123,6 @@
     private void ToggleSidebar()
     {
         isSidebarActive = !isSidebarActive;
+        
     }
 }
