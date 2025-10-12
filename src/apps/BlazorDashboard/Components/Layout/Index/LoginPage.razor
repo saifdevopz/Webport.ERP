@@ -2,6 +2,8 @@
 @page "/account/login"
 @attribute [AllowAnonymous]
 
+
+
 <div class="login-wrapper">
     <header class="header-layout">
         <img src="images/logo.jpg"
@@ -11,76 +13,50 @@
     <div class="body-layout">
         <!-- Left side -->
         <div class="left-panel">
-            <h1>Welcome Back!</h1>
+            <h1>Welcome Back</h1>
             <p>Access your account and continue where you left off.</p>
             <p>Manage your ERP, track your business, and more.</p>
 
             <div class="support">
                 <p>
-                    Need help?
-                    <a href="mailto:support@yourbusiness.com">Contact Support</a>
+                    For any queries, contact us at
+                    <a href="mailto:support@yourbusiness.com">support@webport.co.za</a>
                 </p>
                 <p>📞 +27 123 456 789</p>
+                <MudIcon Icon="@Icons.Custom.Brands.WhatsApp" Title="Favorite" />
             </div>
         </div>
 
         <!-- Right side -->
         <div class="right-panel">
             <div class="login-box">
-                <div class="login-header">
-                    <header>Welcome Sir</header>
-                    <p>We are happy to have you back!</p>
-                </div>
                 <EditForm Model="@model" OnValidSubmit="HandleLogin">
                     <DataAnnotationsValidator />
                     <MudCardContent>
                         <MudTextField @bind-Value="model.Email" Variant="Variant.Outlined" For="@(() => model.Email)" Label="Email" />
                         <MudTextField @bind-Value="model.Password" Variant="Variant.Outlined" For="@(() => model.Password)" Label="Password" />
                     </MudCardContent>
-                    <div class="input-box">
-@*                         <InputText id="email"
-                                   @bind-Value="model.Email"
-                                   class="input-field"
-                                   autocomplete="off"
-                                   required />
-                        <label for="email">Email or phone</label>
-                        <ValidationMessage For="@(() => model.Email)" /> *@
-                       
-                        
-                    </div>
 
-                    <div class="input-box">
-@*                         <InputText id="password"                            
-                                   @bind-Value="model.Password"
-                                   type="password"
-                                   class="input-field"
-                                   autocomplete="off"
-                                   required />
-                        <label for="password">Password</label>
-                        <ValidationMessage For="@(() => model.Password)" /> *@
-                       
-                    </div>
                     <div class="forgot">
                         <section>
                             <a href="#" class="forgot-link">Forgot password?</a>
                         </section>
                     </div>
-                    <div class="input-box">                     
-                        
-                            @if (isLoading)
-                            {
+                    <div class="input-box">
+
+                        @if (isLoading)
+                        {
                             <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-                            }
-                            else
-                            {
+                        }
+                        else
+                        {
                             <button type="submit" class="input-submit" disabled="@isLoading">Sign In</button>
-                            }             
-                            
+                        }
+
 
                     </div>
                     <div class="middle-text">
                         <hr />
-                        <p class="or-text">Or</p>
                         @if (!string.IsNullOrWhiteSpace(ErrorMessage))
                         {
                             <div style="color:red; margin-top: 15px;">
@@ -89,7 +65,6 @@
                         }
                     </div>
                 </EditForm>
-
             </div>
         </div>
     </div>
@@ -124,6 +99,9 @@
         {
             await CheckUserAuthentication();
             _navigated = true;
+
+            await Task.Delay(200); // wait for browser autofill
+            StateHasChanged(); // force MudBlazor to re-evaluate labels
         }
     }
 

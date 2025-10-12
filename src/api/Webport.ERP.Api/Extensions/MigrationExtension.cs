@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Webport.ERP.Identity.Infrastructure.Database;
 using Webport.ERP.Identity.Infrastructure.Database.DataAccess;
+using Webport.ERP.Inventory.Infrastructure.Database;
 
 namespace Webport.ERP.Api.Extensions;
 
@@ -9,12 +10,20 @@ internal static class MigrationExtensions
     public static async Task ApplyAllMigrations(this IApplicationBuilder app)
     {
         await app.ApplyIdentityMigrations();
+        await app.ApplyInventoryMigrations();
+
         await app.ApplySystemSeeder();
     }
 
     public static async Task ApplyIdentityMigrations(this IApplicationBuilder app)
     {
         app.ApplyCustomMigration<IdentityDbContext>(null);
+        await Task.CompletedTask;
+    }
+
+    public static async Task ApplyInventoryMigrations(this IApplicationBuilder app)
+    {
+        app.ApplyCustomMigration<InventoryDbContext>(null);
         await Task.CompletedTask;
     }
 

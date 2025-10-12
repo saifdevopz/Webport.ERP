@@ -10,11 +10,10 @@
     /* Colors */
     --body-color: #f8f8fa;
     --sidebar-color: #ffffff;
-    --primary-color: #695cfe;
+    --primary-color: #2196F3;
     --primary-color-light: #f6f5ff;
     --toggle-color: #ddd;
     --text-color: #1b2124;
-
     /* ===== Sizes ===== */
     --sidebar-width: 250px;
     --sidebar-width-collapsed: 70px;
@@ -22,11 +21,9 @@
     --content-padding: 20px;
     --border-radius: 12px;
     --footer-height: 30px;
-
     /* Font */
     --font-family: "Roboto", sans-serif;
     --font-family-2: "Plus Jakarta Sans", sans-serif;
-
     /* Transitions */
     --tran-fast: all 0.2s ease;
     --tran-medium: all 0.3s ease;
@@ -53,6 +50,10 @@ body {
     flex-direction: column;
     padding-left: var(--sidebar-width);
     min-height: 100vh;
+}
+
+h1{
+    color: var(--primary-color);
 }
 
 /* ============= APP HEADER =============== */
