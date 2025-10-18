@@ -1,13 +1,27 @@
 name: Webport.ERP.ASPIRE CI/CD
 
 on:
-  push:
-    #branches:
-      #- master
   workflow_dispatch:
 
 jobs:
 
+  verify_files:
+    name: Verify repository structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verify files
+        run: |
+          echo "📂 Current directory:"
+          pwd
+          echo "📁 Files in root:"
+          ls -la
+          echo "📁 Files in docker-compose-artifacts:"
+          ls -la docker-compose-artifacts || echo "❌ Folder not found"
+    
+    
   build_images:
     name: Package Software
     runs-on: ubuntu-latest
@@ -15,15 +29,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Verify files
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "List of files in root:"
-          ls -la
-          echo "List of files in docker-compose-artifacts:"
-          ls -la docker-compose-artifacts
       
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
