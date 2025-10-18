@@ -11,6 +11,7 @@ using Webport.ERP.Inventory.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// PRODUCTION
 // DEVELOPMENT SETTINGS
 
 builder.WebHost.UseSentry(options =>
