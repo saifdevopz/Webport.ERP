@@ -10,7 +10,6 @@ public static class ThemeConfig
     {
         CurrentTheme = Themes[0].Theme;
         CurrentThemeName = Themes[0].Name;
-
     }
 
     public static bool IsDarkMode { get; set; }

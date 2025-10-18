@@ -33,21 +33,37 @@
         </MudCardContent>
 
         <MudCardActions Style="display: flex; justify-content: end;">
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Success">Save</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary">Save</MudButton>
             <MudButton OnClick="Cancel" Variant="Variant.Outlined" Color="Color.Error">Cancel</MudButton>
         </MudCardActions>
+
+        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Elevation="0" Variant="Variant.Filled" Dense="true" Class="m-2">
+                @ErrorMessage
+            </MudAlert>
+        }
     </MudCard>
 </EditForm>
 
 @code {
     [Parameter] public string? Id { get; set; }
     private CategoryDto model = new();
+    private bool IsEditMode => !string.IsNullOrWhiteSpace(Id);
+    private string ErrorMessage = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        if (Id != null)
+        if (IsEditMode)
         {
-            model = await GetCategory();
+            try
+            {
+                model = await GetCategory();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Failed to load category: {ex.Message}";
+            }
         }
     }
 
@@ -59,29 +75,26 @@
 
     private async Task OnValidSubmit(EditContext context)
     {
-        Result response;
+        try
+        {
+            Result response = IsEditMode
+                ? await _DataService.PutAsync("category", model)
+                : await _DataService.PostAsync("category", model);
 
-        if (string.IsNullOrWhiteSpace(Id))
-        {
-            response = await _DataService.PostAsync("category", model);
+            if (response.IsSuccess)
+            {
+                _NavigationManager.NavigateTo("/category/index");
+            }
+            else
+            {
+                ErrorMessage = response.Error?.Description ?? "An unexpected error occurred.";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            response = await _DataService.PutAsync($"category", model);
-        }
-
-        if (response.IsSuccess)
-        {
-            _NavigationManager.NavigateTo("/category/index");
-        }
-        else
-        {
-            Console.WriteLine($"Error: {response.Error!.Description}");
+            ErrorMessage = $"Exception: {ex.Message}";
         }
     }
 
-    void Cancel()
-    {
-        _NavigationManager.NavigateTo("/category/index");
-    }
+    private void Cancel() => _NavigationManager.NavigateTo("/category/index");
 }

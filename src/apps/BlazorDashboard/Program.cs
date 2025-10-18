@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Mudblazor
+// Mudblazor UI
 builder.Services.AddMudServices();
 
 // Http Client
