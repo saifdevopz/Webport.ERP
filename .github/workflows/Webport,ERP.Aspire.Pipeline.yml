@@ -1,9 +1,10 @@
-name: Webport.ERP.API CI/CD
+name: Webport.ERP.ASPIRE CI/CD
 
 on:
   workflow_dispatch:
-    branches:
-      - development
+  push:  
+    branches:  
+      - development  
 
 jobs:
   build_images:
