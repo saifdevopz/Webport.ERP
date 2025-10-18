@@ -1,14 +1,15 @@
 ﻿@layout AuthLayout
 @page "/account/login"
+@using BlazorDashboard.Components.Layout.Shared
 @attribute [AllowAnonymous]
 
 
 
 <div class="login-wrapper">
     <header class="header-layout">
-        <img src="images/logo.jpg"
+        <img src="images/webport-designs-72.png"
              alt="Company Logo" 
-             style="width:50px"/>
+             style="width:250px"/>
     </header>
     <div class="body-layout">
         <!-- Left side -->
@@ -68,9 +69,7 @@
             </div>
         </div>
     </div>
-    <footer class="footer-layout">
-        <h3>All rights resserved</h3>
-    </footer>
+    <Footer />
 </div>
 
 

@@ -1,5 +1,5 @@
-﻿@using BlazorDashboard.Components.Layout.Theme
-@using BlazorDashboard.Components.Shared
+﻿@using BlazorDashboard.Components.Layout.Shared
+@using BlazorDashboard.Components.Layout.Theme
 @using MudBlazor
 @inherits LayoutComponentBase
 
@@ -23,12 +23,8 @@
                     <header class="app-header">
                         <i @onclick="ToggleSidebar" class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
                         <div class="div"><h1>Dashboard</h1></div>       
-                        <MudMenu Label="Open menu">
-                            @foreach (var themeName in ThemeConfig.Themes.Select(item => item.Name))
-                            {
-                                <MudMenuItem @onclick="() => ChangeTheme(themeName)" Label="@themeName" />
-                            }
-
+                        <MudMenu Label="Open menu">                            
+                            <MudMenuItem Label="Toggle" @onclick="Test" />
                             <MudMenuItem Label="Settings" @onclick="NavigateToSettings" />
                             <MudMenuItem Label="Logout" @onclick="LogoutClicked" />
                         </MudMenu>
@@ -36,10 +32,7 @@
                     <main class="app-body">
                         @Body
                     </main>
-                    <footer class="app-footer">
-                        <span>© @DateTime.Now.Year WEBPORT. All rights reserved.</span>
-                        <button @onclick="Test">Toggle Dark Mode</button>
-                    </footer>
+                    <Footer />
                     <div @onclick="ToggleSidebar" class="overlay @(isSidebarActive ? "active" : "")"></div>
                 </div>       
             </Authorized>
@@ -88,19 +81,6 @@
     private static void Test()
     {
         ThemeConfig.IsDarkMode = !ThemeConfig.IsDarkMode;
-    }
-
-
-
-    private static void ChangeTheme(string themeName)
-    {
-        var item = ThemeConfig.Themes.FirstOrDefault(t => t.Name == themeName);
-
-        if (item is not null)
-        {
-            ThemeConfig.CurrentTheme = item.Theme;
-            ThemeConfig.CurrentThemeName = item.Name;            
-        }
     }
 
     private void LogoutClicked()
