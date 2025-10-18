@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
+
   build_images:
     name: Package Software
     runs-on: ubuntu-latest
@@ -14,6 +15,15 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Verify files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "List of files in root:"
+          ls -la
+          echo "List of files in docker-compose-artifacts:"
+          ls -la docker-compose-artifacts
       
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
