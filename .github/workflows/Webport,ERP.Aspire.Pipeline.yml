@@ -1,10 +1,9 @@
 name: Webport.ERP.API CI/CD
 
 on:
-  #push:
-    #branches:
-      #- master
   workflow_dispatch:
+    branches:
+      - development
 
 jobs:
   build_images:
