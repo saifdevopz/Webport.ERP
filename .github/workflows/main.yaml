@@ -1,6 +1,7 @@
 name: Webport.ERP.ASPIRE CI/CD
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
