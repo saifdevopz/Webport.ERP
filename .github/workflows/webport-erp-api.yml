@@ -1,7 +1,7 @@
 name: Webport.ERP.API CI/CD
 
 on:
-  push:
+  #push:
     #branches:
       #- master
   workflow_dispatch:
