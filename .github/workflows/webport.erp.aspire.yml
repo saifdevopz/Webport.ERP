@@ -2,6 +2,8 @@ name: Webport.ERP.ASPIRE CI/CD
 
 on:
   workflow_dispatch:
+    branches:
+      - development
 
 jobs:
   build_images:
