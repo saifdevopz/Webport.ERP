@@ -11,6 +11,8 @@ using Webport.ERP.Inventory.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// DEVELOPMENT SETTINGS
+
 builder.WebHost.UseSentry(options =>
  {
      options.Dsn = "";
