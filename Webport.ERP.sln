@@ -77,6 +77,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webport.ERP.Identity.Archit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webport.ERP.ArchitectureTests", "src\test\Webport.ERP.ArchitectureTests\Webport.ERP.ArchitectureTests.csproj", "{24C13DDA-B4B9-257F-4139-DC7099EE87B7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{CA23B386-2665-436D-9859-4FE14FFC0185}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webport.ERP.AppHost", "src\aspire\Webport.ERP.AppHost\Webport.ERP.AppHost.csproj", "{7937AE57-2171-4E71-8ECC-1420834B72E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webport.ERP.ServiceDefaults", "src\aspire\Webport.ERP.ServiceDefaults\Webport.ERP.ServiceDefaults.csproj", "{2A4416DE-AFBA-49E9-B0A0-407504299A92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose-artifacts", "docker-compose-artifacts", "{E0AB6569-874C-4059-A2BD-88DB8FCEBEB7}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-artifacts\.env = docker-compose-artifacts\.env
+		docker-compose-artifacts\docker-compose.yaml = docker-compose-artifacts\docker-compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +179,14 @@ Global
 		{24C13DDA-B4B9-257F-4139-DC7099EE87B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24C13DDA-B4B9-257F-4139-DC7099EE87B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24C13DDA-B4B9-257F-4139-DC7099EE87B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7937AE57-2171-4E71-8ECC-1420834B72E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7937AE57-2171-4E71-8ECC-1420834B72E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7937AE57-2171-4E71-8ECC-1420834B72E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7937AE57-2171-4E71-8ECC-1420834B72E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A4416DE-AFBA-49E9-B0A0-407504299A92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A4416DE-AFBA-49E9-B0A0-407504299A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A4416DE-AFBA-49E9-B0A0-407504299A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A4416DE-AFBA-49E9-B0A0-407504299A92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -200,6 +220,9 @@ Global
 		{4A3B4A19-A16E-EFFB-6FB4-79EE3E030A1E} = {B72B4AB8-FD07-423D-B36B-AEE2071F2C5B}
 		{16CA4055-40EA-4864-A390-A2011D7FBB50} = {81FF0729-B1F0-453D-915B-C47ED0A229D6}
 		{24C13DDA-B4B9-257F-4139-DC7099EE87B7} = {695A3980-A0DA-453B-8EF7-8E7E2D6FD518}
+		{CA23B386-2665-436D-9859-4FE14FFC0185} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7937AE57-2171-4E71-8ECC-1420834B72E6} = {CA23B386-2665-436D-9859-4FE14FFC0185}
+		{2A4416DE-AFBA-49E9-B0A0-407504299A92} = {CA23B386-2665-436D-9859-4FE14FFC0185}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BD294E9-AE78-4D45-9BC0-0564D8E215E7}
