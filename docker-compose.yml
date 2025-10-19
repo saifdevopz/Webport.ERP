@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: src/api/Webport.ERP.Api/Dockerfile
     environment: 
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080   
 
       - OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-gateway-prod-ap-southeast-1.grafana.net/otlp
