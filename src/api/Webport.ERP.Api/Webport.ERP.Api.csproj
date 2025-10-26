@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\aspire\Webport.ERP.ServiceDefaults\Webport.ERP.ServiceDefaults.csproj" />
     <ProjectReference Include="..\..\modules\identity\Webport.ERP.Identity.Infrastructure\Webport.ERP.Identity.Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\inventory\Webport.ERP.Inventory.Infrastructure\Webport.ERP.Inventory.Infrastructure.csproj" />
   </ItemGroup>

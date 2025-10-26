@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\aspire\Webport.ERP.ServiceDefaults\Webport.ERP.ServiceDefaults.csproj" />
     <ProjectReference Include="..\..\common\Webport.ERP.Common.Domain\Webport.ERP.Common.Domain.csproj" />
   </ItemGroup>
 

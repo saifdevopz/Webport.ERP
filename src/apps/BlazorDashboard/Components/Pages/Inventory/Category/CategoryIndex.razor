@@ -75,9 +75,8 @@
         {
             await _DataService.DeleteByIdAsync("category", id);
             await GetCategories();
+            await DialogService.ShowMessageBox("Success", "Deleted Successfully");
         }
-
-        await DialogService.ShowMessageBox("Success", "Deleted Successfully");
     }
 
     private Func<CategoryDto, bool> _quickFilter => x =>
