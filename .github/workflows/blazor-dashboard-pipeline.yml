@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
 
 jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, world!"
+      
   build_images:
     name: Package Software
     runs-on: ubuntu-latest
