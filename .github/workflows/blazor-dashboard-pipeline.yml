@@ -1,4 +1,4 @@
-name: Webport.ERP.Dashboard CI/CD
+name: "Webport.ERP.Dashboard CI/CD"
 
 on:
   workflow_dispatch:
